@@ -1,0 +1,19 @@
+eloi_moyen.ps : 
+     nombre de valeurs prises par évlution pour effectuer la moyenne : 12 
+     taille maximale des mouvements effectues : 640 * 20 = 12800
+     échelle : - abscisses : 1unité : 20 itérations
+               - ordonnées : 1 unité : 3 unités de distance au centre
+     taille du graphe 640x640
+
+
+eloi-linearise : 
+     pareil que ci-dessus
+            echelle : ordonnées : 1 unité  : 100 unités
+               ie : n -> E(100 (e(n)/rac(n)))
+moyenne des eloi-linearisés : 0.589
+
+gaussienne : n = 100 000;
+
+temperature : n = 10 000;
+
+diffusion : 50 000 particules pendant p = 2000 itérations;

@@ -1,0 +1,104 @@
+\appendix
+\section{Programmes en Caml}
+\uline{Résolution du problème de Dirichlet discret en caml et représentation graphique des solutions.}\par
+On se place en dimension $2$. Les programmes qui suivent fournissent une résolution numérique approchée du problème
+discret tel qu'il est traité dans la partie $2$. Dans un souci de concision, nous ne faisons pas figurer des programmes
+élémentaires comme la fabrication d'une matrice, la détermination de son maximum ou autres tâches qui sont
+en fait de simples boucles for.\par
+Le caml-toplevel à lancer est \textit{camllight camlgraph}.
+Il faut commencer par appeler les bibliothèques graphiques de J.M. Quercia ce qu'on fait avec les commandes~:\par
+{\begin{verbatim}
+#open "graphx";;
+load_object "graphx";;
+\end{verbatim}}
+\uline{Calcul d'une valeur approchée de $\mathbb{E}_{(x,y)}(f(B_T))$~:}\par
+{\begin{verbatim}
+let dirichlet ouvert f x y n =
+  let m = ref 0. in
+    for i = 1 to n do
+      let a = ref x and b = ref y in
+	while ouvert !a !b do
+	  let u = random__int 4 in
+	    if u = 0 then a := !a + 1
+	    else if u = 1 then a := !a - 1
+	    else if u = 2 then b := !b + 1
+	    else b := !b - 1
+	done;
+	m := !m +. (f !a !b );
+    done;
+    !m /. (float_of_int n);;
+\end{verbatim}}
+\uline{Calcul de la taille de l'ouvert~:}\par
+{\begin{verbatim}
+let borne_ouvert ouvert =
+  let t1 = ref 0 in
+    for i = 0 to 639 do
+      for j = 0 to 639 do
+        if (ouvert i j) && (i > !t1) then t1 := i
+        else if (ouvert i j) && (j > !t1) then t1 := j
+      done;
+    done;
+    !t1 + 1;;
+\end{verbatim}}
+
+\uline{Frontière de l'ouvert~:}\par
+{\begin{verbatim}
+let frontiere ouvert x y =
+  if not (ouvert x y) then
+    if (ouvert (x+1) y)||(ouvert (x-1) y)||(ouvert x (y+1))||(ouvert x (y-1)) then true
+    else false
+  else false;;
+\end{verbatim}}
+
+\uline{Calcul de la matrice des températures approchées~:}
+{\begin{verbatim}
+let solution ouvert f n =
+  let t1 = borne_ouvert ouvert in
+    let m = mat_float (t1+1) in(*fabrication d'une matrice de flottants*)
+    for x = 0 to t1 do
+      for y = 0 to t1 do
+	if ouvert x y then
+	  m.(x).(y) <- dirichlet ouvert f x y n
+	else if frontiere ouvert x y then
+	  m.(x).(y) <- 0.
+	else m.(x).(y) <- 100.
+      done;
+    done;
+    m;;
+\end{verbatim}}
+
+\uline{Affectation des couleurs~:}\par
+{\begin{verbatim}
+let couleur i =
+  match i with
+    |0 -> black |1 -> red  |2 -> yellow |3 -> green
+    |4 -> blue  |5 -> cyan |6 -> white;;
+\end{verbatim}}
+
+\uline{Représentation graphique d'une matrice de flottants~:}\par
+{\begin{verbatim}
+let graphe_mat m =
+  clear_graph();
+  let t1 = vect_length m.(0) in
+  let u = max m in(*détermination du maximum de m*)
+    for i = 0 to (t1 - 1) do
+      for j = 0 to (t1 - 1) do
+	let c = int_of_float (7. *. (m.(i).(j) /. (u +. 1.))) in
+	  set_color (couleur c);
+	  fill_rect {x=i; y=j} 1 1;
+      done;
+    done;;
+\end{verbatim}}
+
+\uline{Le programme terminal~:}\par
+{\begin{verbatim}
+let graphe_solution ouvert f n =
+  open_graph " 640x640";
+  let m = solution  ouvert f n in
+    graphe_mat m;;
+\end{verbatim}}
+{\begin{verbatim}
+graphe_solution :
+ (int -> int -> bool) -> (int -> int -> float) -> int -> unit = <fun>
+\end{verbatim}}
+

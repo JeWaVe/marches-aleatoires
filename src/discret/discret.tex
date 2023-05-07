@@ -1,0 +1,158 @@
+\partie{Chaînes de Markov et problème de Dirichlet discret.} 
+\spartie{Définitions et premières propriétés.}
+\definition{Loi conditionnelle.}
+Soient $X,Y$ deux v.a. à valeurs dans $(E,\eee)$. On appelle loi conditionnelle de $Y$ sachant 
+$X$ toute application $\nu~:E\times\eee\to\segment{0}{1}$ telle que~:\par
+\begin{itemize}
+\item[(i)]{} Pour tout $x$, $A\to\nu(x,A)$ est une mesure de probabilité sur $\eee$.
+\item[(ii)]{} Pour tout $A$, $x\to\nu(x,A)$ est une application mesurable.
+\item[(iii)]{} Pour toute fonction $h$ mesurable positive, on a~:\par
+$$\espc{h(Y)}{X} = \int_{E} h(y)\nu(X,\dd{y})$$
+\end{itemize}\par
+Ainsi, on aura $P(Y\in A|X) = \nu(X,A)$ p.s. et tous les calculs d'espérance conditionnelle sont 
+considérablement facilités.\par
+\rmq Une application qui vérifie $(i)$ et $(ii)$ est appelée probabilité de transition de $E$ dans $E$.\par
+Désormais, on supposera qu'on se place sur un espace $E$ dénombrable, muni de la tribu de ses parties.
+\definition{Matrice stochastique.}
+Une matrice stochastique sur $E$ est une famille $(Q(x,y))_{(x,y)\in E^2}$ de réels telle que~:
+\begin{itemize}
+\item[(i)]{} $0\leq Q(x,y)\leq 1$ pour tout $x,y$.
+\item[(ii)]{} $\sum\limits_{y\in E} Q(x,y) = 1$ pour tout $x$.
+\end{itemize}
+La notion précédente et celle de probabilité de transition sont équivalentes. En effet, si $Q$ est une 
+matrice stochastique, $\nu(x,A)=\sum_{y\in A}Q(x,y)$ est une probabilité de transition de $E$ dans $E$
+et si $\nu$ est une probabilité de transition, $Q(x,y) = \nu(x,\ens{y})$ est une matrice stochastique.\par
+On définit par récurrence les puissances de $Q$ comme $Q_1 = Q$ et $Q_{n+1}(x,y)=\sum_z Q_n(x,z)Q(z,y)$. On
+vérifie facilement que $Q_n$ est une matrice stochastique (cette définition correspond au produit
+matriciel classique si $E$ est fini).\par
+Pour toute fonction $f~:E\to {\rr}_+$ et $Q$ une matrice stochastique sur $E$,
+on définit $Qf(x) = \sum\limits_{y\in E}Q(x,y)f(y)$.
+\definition{Chaîne de Markov.} Soit $Q$ une matrice stochastique et $X_n$ un processus aléatoire à valeurs
+dans $E$. On dit que $X_n$ est une chaîne de Markov de matrice de transition $Q$ lorsque pour tout $n$, 
+la loi conditionnelle de $X_{n+1}$ sachant $(X_0,\ldots,X_n)$ est $Q(X_n,y)$. De manière équivalente
+cela signifie que~:\par
+$$P(X_{n+1}=y|X_0=x_0,\ldots,X_n=x_n) = Q(x_n,y)$$\par
+dès que $P(X_0=x_0,\ldots,X_n=x_n)>0$.\par
+Intuitivement, le fait que la loi conditionnelle de $X_{n+1}$ ne dépende que de $X_n$ signifie que le 
+processus ne se soucie pas du passé pour déterminer son comportement dans le futur mais seulement du présent.
+Cette propriété est appelée propriété de Markov.\par
+\rmq Soit $\xi_1,\ldots,\xi_n,\ldots$ une suite de v.a. indépentantes, à valeurs dans ${\zz}^d$, de même loi 
+$\mu$. Alors $S_n = \xi_1 + \ldots + \xi_n$ est une chaîne de Markov, de matrice de transition $Q$ donnée par
+$Q(x,y)=\mu(\ens{y-x})$.
+\proposition Un processus $(X_n)$ à valeurs dans $E$ est une chaîne de Markov de matrice de transition $Q$ ssi~:\par
+$$P(X_0=x_0,\ldots, X_n=x_n) = P(X_0=x_0)Q(x_0,x_1)\ldots Q(x_{n-1},x_n)$$\par
+De plus, on a si $P(X_0=x_0)> 0$, $P(X_n=x_n|X_0=x_0)=P(X_0=x_0)Q_n(x_0,x_n)$
+\dem Elle est facile en utilisant la définition d'une probabilité conditionnelle~: $P(A|B) = P(A\cap B)/P(B)$.
+Pour la dernière assertion, on utilise que $Q_n(x_0,x_n) = \sum_{x_1,\ldots,x_n}Q(x_0,x_1)\ldots 
+Q(x_{n-1},x_n)$.
+\rmq Cette propriété montre que la loi du vecteur $(X_0,\ldots X_n)$ ne dépend que de $Q$ et de la loi 
+initiale.
+\proposition Soit $(X_n)$ une chaîne de Markov de matrice de transition $Q$.\par
+$$\espc{f(X_{n+1})}{X_0,\ldots,X_n} = \sum_{y\in E} Q(X_n,y)f(y) = Qf(X_n)$$
+\spartie{Chaîne de Markov canonique, propriété de Markov simple.}
+\proposition{Admise} Soit $Q$ une matrice stochastique sur $E$. Alors il existe un espace de probabilité 
+$(\Omega',\fff',P')$ sur lequel il existe, pour tout $x\in E$, un processus $(X_n^x)$ qui est une chaîne de 
+Markov de matrice de transition $Q$ et tel que $X_0^x=x$ p.s.\par
+Dans la suite, on posera $\Omega = E^{\nn}$. Il servira d'espace canonique sur lequel on définira nos chaînes
+de Markov. Un élément $\omega\in \Omega$ est de la forme $(\omega_0,\omega_1,\ldots)$. On définit les 
+applications coordonnées comme $X_n(\omega) = \omega_n$ et les opérateurs de translation comme
+$\theta_n(\omega)=(\omega_n,\omega_{n+1},\ldots)$. On munit $\Omega$ de la plus petite tribu, notée $\fff$, 
+qui rende mesurable les applications coordonnées. On remarque aussi que $\fff$ est la tribu engendrée par 
+les cylindres, soit les ensembles $C = (\omega|\omega_0=x_0,\ldots,\omega_p=x_p)$.
+De plus, on munit $\Omega$ de la filtration $\fff_n=\sigma(X_0,\ldots,X_n)$.
+\proposition Soit $(B,\bbb)$ un espace mesurable et soit $\psi$ une application de $B$ dans $\Omega$. Alors $\psi$
+est mesurable ssi $X_n\circ\psi$ l'est pour tout $n$.
+\dem Il suffit de montrer que si chacune des $X_n\circ\psi$ sont mesurables, alors $\psi$ l'est aussi. Or
+$\ens{A\in\fff : \psi^{-1}(A)\in\ggg}$ est une tribu qui par hypothèse contient tous les $X_n^{-1}(y),y\in E$
+et rend donc les $X_n$ mesurables. Cette tribu contient alors naturellement $\fff$ toute entière par 
+minimalité de $\fff$.
+\rmq D'après ce résultat les opérateurs de translation sont mesurables.
+\theoreme{Chaîne de Markov canonique.} 
+Soit $Q$ une matrice stochastique sur $E$ et soit $x\in E$. Il existe une unique probabilité, notée
+$\mathbb{P}_x$, sur $\Omega$, telle que sous $\mathbb{P}_x$, le processus des coordonnées $(X_n)$ définisse
+une chaîne de Markov de matrice de transition $Q$, telle que $\mathbb{P}_x(X_0=x) = 1$.
+\dem La proposition 2.3 permet de construire un espace $(\Omega',\fff',P')$ et un processus $(X_n^x)$ qui
+est une chaine de Markov de matrice de transition $Q$ telle que $X_0^x=x$. On définit $\mathbb{P}_x$
+comme la mesure image de $P'$ par l'application~:\par
+$$\fonction{\Omega'}{\Omega}{\omega'}{((X_n^x(\omega'))_{n\in\nn}}$$\par
+Cette application est mesurable grâce à la propriété précédente. On a $\mathbb{P}_x(X_0=x)=P'(X_0^x=x)=1$ et
+$\mathbb{P}_x(X_0=x_0,\ldots,X_n=x_n) = P'(X_0^x=x_0,\ldots,X_n^x=x_n)$ par définition d'une mesure image.
+Puis en utilisant la proposition 2.1, $= P'(X_0^x=x_0)Q(x_0,x_1)\ldots Q(x_{n-1},x_n) = \mathbb{P}_x(X_0=x_0)
+Q(x_0,x_1)\ldots Q(x_{n-1,x_n}$ et en utilisant la réciproque de la proposition 2.1, on obtient bien que
+sous $\mathbb{P}_x$, le processus des coordonnées est une chaîne de Markov de matrice de transition $Q$. Pour
+l'unicité on constate que toutes les mesures satisfaisant à la propriété du théorème coincident sur les 
+cylindres. Or les cylindres forment une classe stable par intersection finie qui engendre $\fff$ et le lemme
+de classe monotone permet de conclure qu'elles sont égales.
+\rmq On déduit immédiatement de la proposition 2.1 que $\mathbb{P}_x(X_n=x_n)=Q_n(x,y)$.\par
+Il se pose le problème de la loi initiale pour montrer que l'on peut toujours ramener un problème sur une 
+chaîne de Markov à la chaîne de Markov canonique. Pour cela, si $\mu$ et une mesure de probabilité sur $E$,
+on pose $\mathbb{P}_\mu = \sum_x \mu(x)\mathbb{P}_x$. On vérifie que c'est une mesure de probabilité et
+que sous $\mathbb{P}_\mu$, le processus des coordonnées forme une chaîne de Markov de matrice de transition
+$Q$ et de loi initiale $\mu$.\par
+On notera $\eesp{x}{\cdot}$ l'espérance sous $\mathbb{P}_x$.
+\theoreme{Propriété de Markov simple.}
+Soient $F$ et $G$ deux fonctions positives mesurables sur $\Omega$ et soit $n\geq 0$.
+Si $F$ est $\fff_n$ mesurable, alors pour tout $x\in E$~:\par
+$$\mathbb{E}_x\lbrack F\cdot G\circ\theta_n\rbrack=\mathbb{E}_x\lbrack F\mathbb{E}_{X_n}\lbrack 
+                                                                                      G\rbrack\rbrack$$
+\dem Il suffit de vérifier le résultat pour $F$ indicatrice d'un cylindre. C'est-à-dire
+$F =\un_{\ens{X_0=x_0,\ldots X_n=x_n}}$. Pour cela, on commence par choisir 
+$G = \un_{\ens{X_0=y_0,\ldots,X_p=y_p}}$. Alors $\eesp{y}{G} = \mathbb{P}_y(X_0=y_0,\ldots,X_p=y_p) = 
+\un_{\ens{y_0=y}}Q(y_0,y_1)\ldots Q(y_{p-1},y_p)$ et donc~:\par 
+$\eesp{x}{F\eesp{X_n}{G}} = \un_{\ens{x=x_0}}Q(x_0,x_1)\ldots
+Q(x_{n-1},x_n)\un_{\ens{x_n=y_0}}Q(y_0,y_1)\ldots Q(y_{p-1},y_p)$.\par
+D'autre part, on a $\eesp{x}{F\cdot G\circ\theta_n} = \mathbb{P}_x(X_0=x_0,\ldots,X_n=x_n,X_n=y_0,\ldots,
+X_{n+p} = y_p)$. Soit en utilisant la proposition 2.1, $\un_{\ens{x=x_0}}Q(x_0,x_1)\ldots Q(x_{n-1},x_n)
+\un_{\ens{x_n=y_0}}Q(y_0,y_1)\ldots Q(y_{p-1},y_p)$. Ce qui donne le résultat. Le lemme de classe monotone
+montre que le résultat reste vrai pour toute fonction $G=1_A$ $A\in\fff$, ce qui permet de conclure.
+
+\spartie{Problème de Dirichlet discret.}
+Dans toute la suite, on fixe une matrice stochastique $Q$ qui sera en pratique celle de la marche aléatoire
+simple dans ${\zz}^d$.\par
+\definition{Fonction harmonique.} Une fonction $f~:E\to\rr_+$ est dite harmonique lorsque pour tout $x$ de 
+$E$, on a~:\par
+$$f(x)=Qf(x)$$\par
+\definition{Problème de Dirichlet~:}
+Soit $F$ une partie finie de ${\zz}^d$ On définit $\partial F = \ens{y\not\in F :\exists x\in F, \va{y-x}=1}$.
+C'est la frontière de $F$. On note $\bar{F} = F\cup\partial F$ l'adhérence de $F$. On se donne une fonction
+$g$ définie sur $\partial F$. Le problème consiste à montrer l'existence et l'unicité d'une fonction définie 
+sur $\bar{F}$, harmonique sur $F$, et qui coincide avec $g$ sur $\partial F$.\par
+\definition{} Pour $G$ une partie de ${\zz}^d$, on définit~:\par
+$$T_G = \inf\ens{n\geq 0 : X_n\in G}$$\par
+$T_G$ est un temps d'arrêt de la filtration $\fff_n$ car $\ens{T_G = n} = \ens{X_0\not\in G}\cap
+\ldots\cap\ens{X_{n-1}\not\in G}\cap\ens{X_n\in G}$ et chacun de ces ensembles est $\fff_n$ mesurable.\par
+On peut alors définir la variable aléatoire~: $X_{T_G}\un_{\ens{T_G<\infty}}$ comme $X_n$ si $T = n$ et $0$
+si $T=\infty$.
+\theoreme{} Soit $F$ un sous-ensemble non-vide de $E$ et posons $G$ le complémentaire de $F$. Soit 
+$g~:G\to\rr_+$ une fonction bornée. Alors~:\par
+\begin{itemize}
+\item[(i)]{} La fonction~: $h(x) = \mathbb{E}_x\lbrack g(X_{T_G})\un_{\ens{T_g<\infty}}\rbrack$ est harmonique
+sur $F$.
+\item[(ii)]{} Si $T_G<\infty$ $\mathbb{P}_x$ p.s. pour tout $x$. Alors $h$ est l'unique fonction harmonique 
+sur $E$ qui est harmonique sur $F$ et coincide avec $g$ sur $G$.
+\end{itemize}
+\dem On remarque que si $x\in F$, on a $\mathbb{P}_x$ p.s.~:\par
+$$g(X_{T_G})\un_{\ens{T_G<+\infty}} = g(X_{T_G}\circ\theta_1)\un_{\ens{T_G\circ \theta_1<\infty}}$$\par
+Ce qui veut simplement dire que le point de sortie de la trajectoire est le même une fois qu'on a ``gommé''
+le premier point qui était dans $F$ et donc ne jouait pas de rôle. Et donc, si l'on pose 
+$U(\omega)= g(X_{T_G(\omega)})\un_{\ens{T_G(\omega)<+\infty}}$, on a $\mathbb{P}_x$ p.s, $U= U\circ\theta_1$.
+En utilisant la propriété de Markov simple, on a donc, pour $x\in F$~:\par
+$$h(x) = \eesp{x}{U} = \eesp{x}{U\circ\theta_1} = \eesp{x}{\eesp{X_1}{U}} = \eesp{x}{h(X_1)}=Qh(x)$$\par
+Ce qui montre que $h$ est harmonique sur $F$. Comme sur $G$, $T_G=0$, il est clair qu'on a $h=g$ sur $G$.
+On admet l'unicité de la solution, qui nécessite un recours aux martingales, et allonge considérablement la 
+preuve.\par
+On peut alors poser clairement le problème de Dirichlet discret et le résoudre avec cette méthode.
+On choisit $F$ une partie finie de ${\zz}^2$ (qui est bien dénombrable). Une fonction $h$ définie sur 
+$\bar{F}$ est dite harmonique sur $F$ si pour tout $x$ de $F$, $h(x)$ est égal à la moyenne de $h$ sur les 
+$4$ plus proches voisins de $x$. On retrouve la notion précédente en prenant comme chaîne de Markov la marche
+aléatoire simple sur ${\zz}^2$~: $Q(x,x\pm e_i) = 1/4$. Alors en utilisant le théorème précédent, on obtient
+que pour toute fonction $g$ positive définie sur $\partial F$, la seule fonction $h~:\bar{F}\to \rr_+$ qui 
+soit harmonique sur $F$ et coincide avec $g$ sur $\partial F$ est donnée par~:\par
+$$h(x) = \eesp{x}{g(X_{T_{\partial F}})}$$\par
+o\`u\par
+$$T_{\partial F} = \inf\ens{n\geq 0 : X_n\in \partial F}$$\par
+En effet, d'après la fin de la première partie, le temps d'arrêt $T_{\partial F}$ est fini 
+$\mathbb{P}_x$ presque surement puisque la marche aléatoire issue de $x$ visite tous les points du plan. 
+(Une translation montre que cela reste vrai pour tout $x$).\par
+
+

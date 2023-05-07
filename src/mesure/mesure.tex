@@ -1,0 +1,310 @@
+\partie{Mesure et intégration.}
+Pour commencer, il faut faire un résumé des résultats et théorémes importants en ce qui concerne la théorie de
+la mesure l'intégration par rapport à une mesure. En effet, une probabilité est une mesure particuliére (de masse totale
+égale à $1$) et une espérance est une intégrale par rapport à cette probabilité. De plus, nombre de notions de probabilités,
+comme une espérance conditionnelle ou une martingale ne peuvent pas s'énoncer hors de ce cadre. Cependant, comme nous avons pu
+le dire, nous ne voulons (et ne pouvons) pas réaliser un cours d'intégration mais plutét rappeler des résultats et des définition 
+utiles pour la suite.\par
+Dans cette partie $X$ désigne toujours un ensemble non vide et $\parties{X}$ l'ensemble de ses parties.
+\spartie{Intégrale par rapport é une mesure positive.}
+\definition{$\sigma-$algébre.} Un sous ensemble $\mathcal{M}$ de $\parties{X}$ est une tribu ou $\sigma-$algébre
+lorsque~:\par
+\begin{itemize}
+\item{} $\emptyset \in \mathcal{M}$
+\item{} $A\in \mmm \implique A^c\in \mmm$
+\item{} $\displaystyle{A_n \in \mmm \implique \bigcup_{n\in \nn}A_n\in \mmm}$
+\end{itemize}
+Des tribus existent toujours puisque $\parties{X}$ en définit une et qu'une intersection de tribus est encore une
+tribu.\par
+\rmq Cette propriété permet de définir la plus petite tribu contenant une partie $A$ donnée de $\parties{X}$, notée
+$\sigma (A)$. Ainsi on parlera de tribu borélienne en désignant la tribu engendrée par les ouverts d'un espace
+topologique comme ${\rr}^d$.
+\definition{Mesure positive.} C'est une application $\mu$ de $\mmm$ dans $\rbar_+$ qui vérifie deux propriétés~:\par
+\begin{itemize}
+\item{} $\mu(\emptyset) = 0$
+\item{} Si $A_n\in \mmm$, tous disjoints alors $\displaystyle{\mu \bigl(\bigcup_{n\in \nn}A_n\bigr) = 
+                                                    \serie{n=0}{+\infty}{\mu(A_n)}}$
+\end{itemize}
+La premiére propriété n'est pas toujours donnée mais en fait il n'y a que deux valeurs possibles pour $\mu(\emptyset)$, 
+$0$ et $+\infty$. La deuxiéme n'ayant aucun intérét, on impose la premiére possibilité.\par
+Les mesures positives possédent certaines propriétés importantes comme~:\par
+\begin{itemize}
+\item{} Si $A_n$ est une suite décroissante d'ensembles mesurables de mesure finie et $A = \cap A_n$ alors~:\par
+$$\mu(A) = \limndecroiss \mu(A_n)$$
+\item{} Si $A_n$ est une suite croissante d'ensembles mesurables et $A = \cup A_n$ alors~:\par
+$$\mu(A) = \limncroiss \mu(A_n)$$
+\end{itemize}
+On peut donner des exemples de mesures, comme la mesure de dénombrement définie par $\mu(\lbrace{a\rbrace}) = 1$, ou la mesure de 
+Lebesgue définie sur la tribu borélienne de $\rr$ par $\mu(\segment{a}{b}) = b-a$.\par
+Les deux exemples précédents suggérent qu'il suffit d'imposer les valeurs d'une mesure sur une certaine classe
+de sous ensembles pour définir une mesure. Afin de formaliser tout cela, on introduit la notion de classe monotone.
+\definition{Classe monotone.} Un sous ensemble $\mmm$ de $\parties{X}$ est une classe monotone lorsque~:
+\begin{itemize}
+\item{} $X\in \mmm$
+\item{} Si $A,B\in \mmm$ et $A\subset B$ alors $B\cap A^c\in \mmm$
+\item{} Si $A_n\in \mmm$ et $A_n\subset A_{n+1}$ alors $\bigcup\limits_{n\in \nn} A_n \in \mmm$
+\end{itemize}
+On vérifie que toute intersection de classe monotone est une classe monotone et on peut donc définir $\mmm(\ccc)$ 
+comme la plus petite classe mononotone contenant $\ccc$. On arrive au premier théoréme important~:\par
+\theoreme{Lemme de classe monotone.} Si $\ccc$ est stable par intersections finies alors $\mmm(\ccc) = \sigma(\ccc)$.\par
+Pour démontrer ce théoréme, il suffit de montrer que $\mmm(\ccc)$ est une tribu et méme seulement qu'elle est stable par 
+intersections finies. et donc seulement pour l'intersection. On choisit donc $A \in \ccc$ et on pose~:
+$\mmm_1 = \lbrace B\in \mmm(\ccc) : A\cap B\in \mmm(\ccc)\rbrace$ On vérifie que c'est une classe monotone et donc que c'est 
+$\mmm(\ccc)$. En reprenant cet argument avec $A\in \mmm(\ccc)$, on conclut.\par
+On en déduit un corollaire important, qui justifiera l'unicité de la mesure de Lebesgue ou de la mesure produit.
+\theoreme{} Soient $\mu,\nu$ deux mesures sur $(X,\aaa)$. Supposons qu'il existe une classe $\ccc\subset \aaa$ stable par
+intersections finies, telle que $\sigma(\ccc) = \aaa$ et $\mu(A) = \nu(A)$ sur $\ccc$. Alors
+\begin{itemize}
+\item{} Si $\mu(X) = \nu(X)< +\infty$ alors $\mu = \nu$.
+\item{} S'il existe une suite croissante $X_n$ de parties de $X$ incluses dans $\ccc$ telles que $\mu(X_n) = \nu(X_n)<\infty$ alors
+$\mu = \nu$
+\end{itemize}
+\dem On pose $\mmm_1 = \lbrace A\in \aaa : \mu(A) = \nu(A)\rbrace$ et on vérifie, dans le cas o\`u $\mu,\nu$ sont finies, que c'est
+une classe monotone qui contient $\ccc$. Pour le deuxiéme cas, on pose $\mu_n = \mu(\cdot\cap X_n)$ et de méme pour $\nu$ et on 
+applique la premiére partie é ces deux mesures. Pour finir on utilise la propriété de limite croissante des mesures puisque $A = 
+\bigcup_n (A\cap X_n)$.\par
+On en déduit qu'il existe au plus une mesure positive $\lambda$ sur $(\rr, \bbb(\rr))$ telle que $\lambda(\intervalle{a}{b}) = b-a$.\par
+\definition{Fonction mesurable.} Une fonction mesurable est telle que l'image réciproque par $f$ de tout ensemble
+mesurable est mesurable.\par
+Si on se place sur ${\rr}^{d}$ et qu'on prend la tribu borélienne, une fonction mesurable est telle que l'image
+réciproque de tout ouvert, de tout segment ou de tout $\intervalle{-\infty}{a}$ ou $a$ est rationnel soit un 
+ensemble mesurable. Ainsi une application continue est mesurable au sens de Borel, ce qui justifie en partie 
+la définition. On va maintenant construire l'intégrale par rapport é une mesure d'une fonction mesurable.
+\rmq La somme, le produit, la composition de deux fonctions mesurables est mesurable. La borne sup, inf, la limite
+simple, la limite sup la limite inf d'une famille dénombrable de fonctions mesurables sont mesurables. L'ensemble
+de convergence d'une suite de fonctions est mesurable. (C'est l'image réciproque de la diagonale de ${\rr}^2$ par 
+l'application mesurable $\limsup f_n - \liminf f_n$).
+\definition{Intégrale d'une fonction étagée.} Une fonction étagée de $X$ dans $\rr$ est une fonction $s$ dont 
+l'image est finie. On note $\lbrace{a_i\rbrace}_i$ son image et $A_i = f^{-1}(\lbrace{a_i\rbrace})$. On définit 
+alors~:\par
+$$\integrale{X}{}{s\dd{\mu}} = \serie{i}{}{a_i\mu(A_i)}$$\par
+\rmq Cette définition correspond é la construction de l'intégrale de Riemann mais est plus générale puisque qu'elle
+permet d'ores-et-déjé d'intégrer la fonction caractéristique de $\qq\cap\segment{0}{1}$.
+\definition{Intégrale d'une fonction positive.} Si $f$ est positive on note $\eee(f)$ l'ensemble des fonctions
+en escalier in\-fé\-rieu\-res é $f$ et on pose~:\par
+$$\integrale{X}{}{f\dd{\mu}} = \sup_{s\in \eee(f)}\integrale{X}{}{s\dd{\mu}}$$\par
+Pour intégrer sur $E\subset X$ il suffit d'appliquer la définition ci-dessus é$f 1_E$.
+On conviendra que sur un ensemble de mesure nulle (ou négligeable) l'intégrale de toute fonction est nulle.\par
+Pour une fonction quelconque réelle on pose $u^+$ sa partie positive et $u^-$ sa partie négative de sorte que 
+$u = u^+ - u^-$.
+\definition{Intégrale d'une fonction é valeurs dans $\cc$.}
+Une telle fonction $u$ se décompose en $u_1+iu_2$. Ensuite on décompose $u_i = {u_i}^+-{u_i}^-$ et, lorsque 
+$\int \lvert f\rvert\dd{\mu}<+\infty$ on définit~:\par
+$$\integrale{X}{}{u\dd{\mu}}=\integrale{X}{}{{u_1}^+\dd{\mu}}-\integrale{X}{}{{u_1}^-\dd{\mu}}+
+  i\integrale{X}{}{{u_2}^+\dd{\mu}}-i\integrale{X}{}{{u_2}^-\dd{\mu}}$$\par
+On vérifie alors que l'ensemble des fonctions intégrables $\lll^1(\mu)$ est un $\cc$-espace vectoriel et que $f\to
+\int_X f\dd{\mu}$ y définit une forme linéaire. De plus on a l'utile propriété~:\par
+$$\left\lvert\integrale{}{}{f\dd{\mu}}\right\rvert\leq \integrale{}{}{\lvert f\rvert\dd{\mu}}$$\par
+\spartie{Théorémes de convergence.}
+On suppose que $X, \mu$ est un espace mesuré tout au long de cette sous-partie.
+\theoreme{Convergence monotone} Soit $(f_n)_n$ une suite de fonctions mesurables sur $X$ é valeurs dans 
+$\segment{0}{\infty}$ telle que $\limncroiss f_n = f$. Alors $f$ est mesurable et\par
+$$\limn \integrale{X}{}{f_n\dd{\mu}} = \integrale{X}{}{f\dd{\mu}}$$
+\dem Que $f$ soit mesurable provient du fait que c'est le sup d'une famille de fonctions mesurables. Comme la suite
+des intégrales de gauche converge dans $\rbar$, on peut noter $\alpha$ sa limite et un passage é la limite donne 
+$\alpha\leq\int_X f\dd{\mu}$. Reste é établir l'inégalité inverse. On ne peut évidemment pas le faire directement.
+Soit alors $s$ une fonction étagée plus petite que $f$ et $c$ un réel de $\intervalle{0}{1}$. Posons 
+$E_n = \lbrace x\in X\lvert f_n(x)\geq c s(x)\rbrace$. Tous ces ensembles sont mesurables, $E_n\subset E_{n+1}$ et
+$X = \cup E_n$. Alors~:\par
+$\int_X f_n\dd{\mu} \geq \int_{E_n}f_n\dd{\mu}\geq c\int_{E_n} s\dd{\mu}$\par
+En passant é la limite sur $n$ on a donc $\alpha\geq c\int_{X}s\dd{\mu}$ ce qui permet de conclure. 
+\prop{Lemme de Fatou.} Soit $f_n : X\to\segment{0}{\infty}$ une suite de fonctions mesurables. Alors~:\par
+$$\int \liminf f_n\dd{\mu}\leq \liminf\int f_n\dd{\mu}$$ 
+\theoreme{Convergence dominée.}
+Soit $f_n:X\to\cc$ mesurables telles qu'il existe $g\in\lll^1(\mu)$ avec $\va{f_n}\leq\va{g}$. On suppose que 
+$f_n$ converge simplement vers $f$. Alors $f$ est intégrable et~:\par
+$$\limn \int \va{f_n - f}\dd{\mu} = 0$$\par
+On peut permuter limite et intégrale.
+\rmq C'est un bel exemple de la puissance de l'intégrale de Lebesgue car sans cette théorie, le résultat est trés 
+difficilement prouvable.
+\dem $f\in\lll^1$ par passage é la limite. Ensuite, $\va{f_n -f}\leq 2g$. On applique le lemme de Fatou é la fonction 
+$2g - \va{f_n -f}$. Ensuite on obtient\newline
+$\limsup \int \va{f_n-f}\dd{\mu}\leq 0$ ce qui donne le résultat.
+
+\theoreme{} Soit $f:X\to\segment{0}{\infty}$ une application mesurable. Alors~:\par
+$$\phim(E) = \integrale{E}{}{f\dd{\mu}}$$\par
+définit une mesure sur $\mmm$ (la tribu de $\mu$) et pour toute fonction mesurable de $X$ dans $\segment{0}{\infty}$~:\par
+$$\integrale{X}{}{g\dd{\phim}} = \integrale{X}{}{fg\dd{\mu}}$$\par
+On écrit la derniére inégalité sous la forme $\dd{\phim} = f\dd{\mu}$. La demonstration utilise le théoréme de la 
+convergence monotone.
+
+\spartie{Construction de mesures.}
+\sspartie{Mesure de Lebesgue.}
+La mesure de Lebesgue est la mesure la plus utile en théorie de l'intégration puisque l'intégrale par rapport é cette mesure d'une
+fonction continue coincide avec l'intégrale de Riemann. C'est l'unique mesure qui vérifie $\lambda(\intervalle{a}{b}) = b-a$. Nous
+avons prouvé son unicité mais pour établir son existence il faut beaucoup de place. D'un cété on peut la construire é partir du
+théoréme de Riesz et de l'intégrale de Riemann, comme dans $\lbrack 1\rbrack$. Mais si cette construction est générale (car on a 
+directement le cas de ${\rr}^d$ et la régularité) elle est coéteuse d'un point de vue théorique. D'un autre cété on peut la construire
+en dimension 1 à partir des mesures extérieures. C'est ce qu'on va faire rapidement ici~:\par
+\definition{Mesure extérieure.}
+Une application $\lambda^* : \parties{X}\to\segment{0}{\infty}$ est une mesure extérieure si\par
+\begin{itemize}
+\item{} $\lambda^*(\emptyset) = 0$
+\item{} $A\subset B\implique \lambda^*(A)\leq \lambda^*(B)$
+\item{} $\forall A_k\in\parties{X}, \lambda^*\bigl(\bigcup\limits_{k\in \nn} A_k\bigr)\leq \serie{k\in \nn}{}{\lambda^*(A_k)}$
+\end{itemize}\par
+\definition{$\lambda^*$-mesurabilité.}
+Une partie $A\subset X$ est $\lambda^*$-mesurable ssi~:\par
+$$\forall B\subset X,\quad \lambda^*(B) = \lambda^*(B\cap A) + \lambda^* (B\cap A^c)$$\par
+On note $\mmm(\lambda^*)$ l'ensemble des parties $\lambda^*$-mesurables.
+\prop{} $\mmm(\lambda^*)$ est une tribu, qui contient toutes les parties telles que $\lambda^*(A) = 0$ et la restriction
+de $\lambda^*$ é $\mmm(\lambda^*)$ est une mesure.\par
+Pour construire la mesure de Lebesgue, il suffit alors de poser la bonne mesure extérieure, é savoir~:\par
+$$\lambda^*(A) = \inf\lbrace \serie{i\in \nn}{}{(b_i-a_i)} : A\subset \bigcup\limits_{i\in \nn} \intervalle{a_i}{b_i}\rbrace$$\par
+On vérifie alors le~:\par
+\theoreme{} \begin{itemize}
+\item{}  $\lambda^*$ est une mesure extérieure sur $\rr$.
+\item{} La tribu $\mmm(\lambda^*)$ contient les boréliens.
+\item{} Pour tous $a\leq b$, $\lambda^*(\segment{a}{b}) = \lambda^*(\intervalle{a}{b}) = b-a$
+\end{itemize}
+On construit de méme la mesure de Lebesgue en dimension $d$. Cette mesure est compléte (tout sous ensemble d'un ensemble mesurable de
+mesure nulle est mesurable et de mesure nulle) et la tribu $\mmm(\lambda^*)$ coincide avec la complétée de la tribu borélienne.
+\theoreme{Mesure de Lebesgue.} La mesure $\lambda$ posséde les propriétés suivantes~:
+\begin{itemize}
+\item{} $\lambda(\Pi_i\intervalle{a_i}{b_i}) = \Pi_i(b_i-a_i)$ pour tous $a_i, b_i$.
+\item{} $\lambda$ est réguliére~: pour tout $A$ mesurable on a~: \par
+\begin{tabular}{lcl}
+$\lambda(A)$& $=$&  $\inf\lbrace\lambda(U) : U \mathrm{ouvert}, A\subset U\rbrace$\\
+            & $=$&  $\sup\lbrace\lambda(K) : K\mathrm{compact}, K\subset A\rbrace$
+\end{tabular}
+\item{} $E\in \mmm$ ssi il existe $A$ un $F_{\sigma}$ et $B$ un $G_{\delta}$ tel que $A\subset E\subset B$ et 
+         $\lambda(B-A) = 0$
+\item{} $\lambda$ est invariante par translation.
+\item{} Si $\mu$ est une mesure de Borel réguliére et invariante par translation alors $\mu = c \lambda$.
+\item{} $\forall T\in \lll({\rr}^k), \exists\Delta(T)$ tel que $\lambda(T(E)) = \Delta(T)\lambda(E)$.
+\end{itemize}
+L'invariance par translation est donc cruciale puisqu'elle caractérise la mesure de Lebesgue parmi les mesures 
+réguliéres. On ne prouvera pas ces propriétés dans un souci de concision.
+\medskip
+\rmq Il est facile de voir, par un argument de cardinalité, que tous les ensembles de $\mmm$ ne sont pas boréliens.
+En effet $\bbb(\rr)$ est engendré par une famille dénombrable (les pavés é coordonnées rationnelles) et on peut montrer
+qu'alors cette tribu a méme cardinal que $\rr$, soit $c$ (pour ``continu''). Par contre tous les sous ensembles du Cantor
+sont mesurables (car il est de mesure nulle et que $\lambda$ est compléte). Or il a le cardinal du continu et donc $2^c$
+parties, ce qui montre qu'il y a autant d'ensembles mesurables que de parties de $\rr$.\par 
+Il est moins évident qu'il existe des ensembles non-mesurables au sens de Lebesgue. En admettant l'axiome du choix, 
+c'est pourtant le cas. Si on considére le groupe quotient de $\rr$ par $\qq$ et qu'on pose $\mathbb{H}$ un ensemble
+contenant un et un seul représentant de chaque classe d'équivalence. Alors $\rr = \cup_{x\in \qq} \mathbb{H}+x$
+ce qui montre que $m(\mathbb{H}) > 0$. Mais d'un autre coté $\cup \mathbb{H} + x \subset \segment{0}{2}$ o\`u la 
+réunion est prise sur tous les rationnels de $\segment{0}{1}$ ce qui montre $m(\mathbb{H}) = 0$. Cette absurdité
+montre que $\mathbb{H}$ n'est pas mesurable (il n'est donc pas non plus borélien). Cependant, on a utilisé l'axiome du
+choix.\par
+\sspartie{Mesure Produit.}
+\definition{Tribu produit.}
+Soient $(E,\aaa)$ et $(F,\bbb)$ deux espaces mesurables. On munit $E\times F$ de la tribu produit~:\par
+$$A\otimes B = \sigma(A\times B : A\in \aaa, B\in \bbb)$$\par
+On peut de méme définir $\aaa_1\otimes\ldots \otimes \aaa_n = \sigma(A_1\times\ldots A_n; A_i\in \aaa_i)$ et on a associativité
+dans le produit de tribu.
+\definition{Section.}
+Si $C\subset E\times F$, $x\in E, y\in F$ on pose~:\par
+$$C_x = \lbrace y\in F : (x,y)\in C\rbrace$$\par
+$$C^y = \lbrace x\in E : (x,y)\in C\rbrace$$\par
+Si $f$ est une fonction de $E\times F$ on pose $f_x(y) = f(x,y)$ et $f^y(x) = f(x,y)$.\par
+\prop{} 
+\begin{itemize}
+\item{} Si $C\in \aaa\otimes\bbb$ alors $C_x\in \aaa$ et $C^y\in \bbb$ pour tous $x,y$.
+\item{} Si $f$ est mesurable pour $\aaa\otimes \bbb$ alors $f_x$ est mesurable pour $\bbb$ et $f^y$ l'est pour $\aaa$.
+\end{itemize}
+\dem é $x$ fixé on pose $\ccc_x = \lbrace C\in \aaa\otimes\bbb : C_x\in \bbb\rbrace$ et on vérifie que c'est une tribu
+qui contient les pavés mesurables. Pour l'autre on écrit $f_x^{-1}(D) = \lbrace y\in F : (x,y)\in f^{-1}(D) = (f^{-1}(D))_x$\par
+\theoreme{Mesure produit.} Soient $\mu, \nu$ deux mesures $\sigma$-finies.
+\begin{itemize} 
+\item{} Il existe une unique mesure $\mu\otimes\nu$ sur $\aaa\otimes\bbb$ telle que $\mu\otimes\nu(A\times B) = \mu(A)\nu(B)$.
+\item{} Pour tout $C\in \aaa\otimes \bbb$,\par
+$\mu\otimes \nu(C) = \integrale{E}{}{\nu(C_x)\mu(\mathrm{d}x)} = \integrale{F}{}{\mu(C^y)\nu(\mathrm{d}y)}$
+\end{itemize}\par
+\dem L'unicité provient du lemme de classe monotone. Pour l'existence on pose~:\par
+$\ggg = \lbrace C\in \aaa\otimes\bbb : x\to\nu(C_x)\;\mathrm{soit}\;\aaa\mathrm{-mesurable}\rbrace$ et on vérifie que c'est une classe monotone qui contient les pavés mesurables. Le lemme
+de classe monotone assure $\ggg = \aaa\otimes\bbb$ et on vérifie alors que $m(C) = \int_E \nu(C_x)\mu(\mathrm{d}x)$ définit une 
+mesure.\par
+On rappelle maintenant deux théorémes fondamentaux sur les mesures produits.
+\theoreme{Fubini-Tonnelli.} Soient $\mu,\nu$ deux mesures $\sigma$-finies et soit $f : E\times F\to \segment{0}{\infty}$ une fonction 
+mesurable. Alors on a~:
+\begin{itemize}
+\item{} $x\to \integrale{F}{}{f(x,y)\nu(\mathrm{d}y)}$ et $y\to \integrale{E}{}{f(x,y)\mu(\mathrm{d}x)}$ sont respectivement $\aaa$ et 
+$\bbb$-mesurables. 
+\item{} $\integrale{E\times F}{}{f\mathrm{d}\mu\otimes\nu} = \integrale{E}{}{\Bigl(\integrale{F}{}{f(x,y)\nu(\mathrm{d}y)}\Bigr)\mu(\mathrm{d}x)} = \integrale{F}{}{\Bigl(\integrale{E}{}{f(x,y)\mu(\mathrm{d}x)}\Bigr)\nu(\mathrm{d}y)}$
+\end{itemize}\par
+\dem Soit $C\in \aaa\otimes \bbb$. Si $f = 1_C$, on a déjé vu que $x\to \nu(C_x)$ est $\aaa$-mesurable. On en déduit par linéarité que
+le résultat est vrai pour toute fonction étagée. Si $f$ esy positive, on peut écrire $f = \limncroiss f_n$ o\`u les $f_n$ sont étagées
+positives. On utilise alors le théoréme de convergence monotone pour conclure.
+\theoreme{Fubini-Lebesgue.} Soit $f\in \lll^1(E\times F, \aaa\otimes\bbb, \mu\otimes\nu)$. Alors~:\par
+\begin{itemize}
+\item{} $\mu$-pp, $f_x$ est dans $\lll^1(F,\bbb,\nu)$ et $\nu$-pp, $f^y$ est dans $\lll^1(E,\aaa,\mu)$.
+\item{} $x\to \integrale{F}{}{f(x,y)\nu(\mathrm{d}y)}$ et $y\to \integrale{E}{}{f(x,y)\mu(\mathrm{d}x)}$ sont respectivement dans 
+$\lll^1(E,\aaa,\mu)$ et dans $\lll^1(F,\bbb,\nu)$.
+\item{} $\integrale{E\times F}{}{f\mathrm{d}\mu\otimes\nu} = \integrale{E}{}{\Bigl(\integrale{F}{}{f(x,y)\nu(\mathrm{d}y)}\Bigr)\mu(\mathrm{d}x)} = \integrale{F}{}{\Bigl(\integrale{E}{}{f(x,y)\mu(\mathrm{d}x)}\Bigr)\nu(\mathrm{d}y)}$
+\end{itemize}
+\rmq Les fonctions de $\lll^1$ sont définies é un ensemble de mesure nulle prés car en fait l'espace intéressant est $L^1$ qui est
+le quotient de $\lll^1$ par la relation d'équivalence $\sim$ d'égalité $\mu$-pp. En effet $L^1$ (et tous les $L^p$) est un espace
+métrique complet, contrairement é $\lll^1$ qui n'a pas de topologie intéressante. C'est pourquoi il n'est pas génant que les fonction
+du théoréme ne soient définies que presque partout.
+\dem On commence par appliquer le théoréme précédent é $\va{f}$ pour conclure é l'intégrabilité de $f^y$ et $f_x$. Pour ce qui est
+des intégrales partielles, on écrit $f = f^+-f^-$ et on applique le théoréme précédent é $f^+$ et $f^-$.\par
+Il faut noter que l'hypothése $f\in L^1(\mu\otimes\nu)$ est fondamentale puisque par exemple $f(x,y) = 2e^{-2xy}-e^{-xy}$ définie
+sur $\intervalle{0}{+\infty}\times\intervalleg{0}{1}$, est intégrable selon $x$, selon $y$ et quand on calcule les deux intégrales 
+croisées elles sont différentes.
+\spartie{Mesures complexes.}
+On va maintenant parler des mesures complexes, dans le but de démontrer le théoréme de Radon-Nykodim, sans doute le théoréme
+le plus puissant de toute la de l'intégration qui permet par exemple de montrer l'existence d'espérance conditionnelle. Nous ne 
+démontrons donc aucun des résultats intermédiaires mais nous démontrerons Radon-Nykodim, en admettant toutefois certains résultats comme
+l'isomorphisme canonique entre un hilbert et son dual topologique ou d'autres propriétés qui ne serviraient ensuite. 
+\definition{Mesure complexe} C'est une application d'une tribu dans $\cc$ qui vérifie la propriété suivante~:\par
+$$\mu(E) = \serie{i=1}{+\infty}{\mu(E_i)}$$\par
+Pour toute partition dénombrable $(E_i)$ de $E$.\par
+\rmq Une mesure complexe ne prend donc jamais de valeur infinie, contrairement é une mesure positive. De plus, 
+la valeur de la série ne dépendant pas de l'ordre de sommation des termes, elle est absolument convergente. On peut
+alors associer é $\mu$ une mesure positive, la plus petite mesure positive qui domine $\mu$, appelée variation totale~:\par
+\definition{Variation totale} Soit $\mu$ une mesure complexe. On pose~:\par
+$$\va{\mu}(E) = \sup \serie{}{}{\va{\mu(E_i)}}$$\par
+le sup étant pris sur toutes les partitions de $E$.\par
+\prop{} La variation totale d'une mesure complexe est une mesure positive telle que $\va{\mu}(X)<+\infty$.
+\definition{Absolue continuité.} Soit $\mu$ une mesure positive sur $\mmm$ et $\lambda$ une mesure positive ou 
+complexe. Si $\mu(E) = 0$ implique $\lambda(E) = 0$ on dit que $\lambda$ est absolument continue par rapport é $\mu$
+et on écrit~:\par
+$$\lambda\ll \mu$$\par
+Si $\lambda_1, \lambda_2$ sont portées par deux ensembles disjoints on dit qu'elles sont mutuellement singuliéres et
+on écrit~:\par
+$$\lambda_1\bot \lambda_2$$\par
+\theoreme{Radon-Nikodym}
+Soit $\mu$ une mesure positive $\sigma$-finie sur $\mmm$ dans $X$ et $\lambda$ une mesure complexe sur $\mmm$.
+\begin{itemize}
+\item{a)} $\exists !\lambda_a, \lambda_s$ mesures complexes sur $\mmm$ telles que~:\par
+$$\lambda = \lambda_a + \lambda_s,\; \lambda_a\ll \mu,\; \lambda_s\bot\mu$$\par
+Si $\lambda$ positive et finie, $\lambda_a,\lambda_s$ aussi et sont mutuellement singuliéres.
+\item{b)}$\exists ! h\in L^1(\mu)$ telle que $\forall E\in \mmm$~:\par
+$$\lambda_a(E) = \integrale{E}{}{h\dd{\mu}}$$
+\end{itemize}
+La $\sigma$-finitude est le fait que $X$ soit réunion dénombrable d'ensembles de mesure finie.
+\rmq Ce théoréme n'est utilisé en probabilités qu'avec des mesures réelles appelées mesures ``signées''. Mais la 
+démonstration étant la méme, autant le présenter dans son cadre complexe. 
+\dem Supposons $\lambda$ positive et bornée. On peut s'y ramener en décomposant partie réelle et imaginaire. On 
+introduit une fonction $w\in L^1(\mu)$ comprise strictement entre $0$ et $1$ (C'est lé qu'intervient la 
+$\sigma$-finitude) et posons $\dd{\phim} = \dd{\lambda}+ w\dd{\mu}$. On aura alors pour toute fonction mesurable~:
+\begin{equation}
+\int_X f\dd{\phim} = \int_X f\dd{\lambda} + \int_X fw\dd{\mu}
+\end{equation}
+Si $f\in L^2(\phim)$ l'inégalité de Cauchy-Schwarz montre que $f\to \int_X f\dd{\lambda}$ est une forme linéaire
+bornée sur $L^2(\phim)$. On utilise alors un théoréme sur les espaces de Hilbert pour trouver $g\in L^2(\mu)$
+telle que pour toute $f\in L^2(\phim)$ on ait~: $\int_X f\dd{\lambda} = \int_X fg\dd{\phim}$. Mais en faisant 
+$f =\chi_E$ dans $(1)$, en utilisant $0\leq \lambda\leq \phim$ on a~:
+\begin{equation}
+0\leq \frac{1}{\phim(E)}\int_E g\dd{\phim}
+\end{equation}
+et un théoréme montre alors que $0\leq g\leq 1$ $\phim$-presque partout. En redéfinissant $g$ de maniére arbitraire
+sur un ensemble de mesure nulle on peut donc la supposer dans $\segment{0}{1}$ pour tout $x$. On récrit $(1)$ sous la
+forme~:
+\begin{equation}
+\int_X (1-g)f\dd{\lambda} = \int_X fgw\dd{\mu}
+\end{equation}
+On pose alors $A = \lbrace x| 0\leq g(x)<1\rbrace$ et $B = \lbrace x| g(x) = 1\rbrace$. On définit ensuite~:\par
+\centerline{$\lambda_a(E) = \lambda (A\cap E)$ et $\lambda_s (E) = \lambda (B\cap E)$}\par
+On fait alors successivement $f = \chi_B$ et $f = (1+g+g^2 +\ldots g^n)\chi_E$ dans l'égalité $(3)$ pour arriver au 
+résultat.\par
+
+
+
+
+
+
+
+

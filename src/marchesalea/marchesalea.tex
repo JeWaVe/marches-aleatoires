@@ -1,0 +1,173 @@
+\partie{Marches aléatoires.}
+\spartie{Théorème importants.}
+Pour commencer, rappelons des résultats utiles de probabilité.
+\definition{Classe monotone.}
+Un sous ensemble $\mmm$ de $\parties{E}$ est une classe monotone lorsque~:
+\begin{itemize}
+\item[(i)]{} $E\in \mmm$\par
+\item[(ii)]{} Si $A, B\in \mmm$ alors $B\cap A^c\in \mmm$\par
+\item[(iii)]{} Si $A_n$ est une suite croissante d'éléments de $\mmm$, $\mmm$ contient 
+$\bigcup\limits_{n\in\nn} A_n$.
+\end{itemize}\par
+Ainsi, il est évident qu'une tribu est une classe monotone. Une intersection quelconque de
+classes monotones reste une classe monotone, ainsi, comme pour les tribus, on peut définir la 
+classe monotone engendrée par une partie $\ccc$ de $\parties{E}$ et on la note $\mmm(\ccc)=
+\bigcap\limits_{\ccc\subset M}M$.
+\theoreme{Lemme de Classe monotone.} Si $\ccc\subset\parties{E}$ est stable par intersections 
+finies alors $\mmm(\ccc) = \sigma(\ccc)$ (la tribu engendrée par $\ccc$), ou de manière équivalente, $\mmm(\ccc)$ est une tribu.
+\dem Il suffit en fait de montrer que $\mmm(\ccc)$ est stable par intersections finies. En effet
+une fois qu'on sait cela les vérifications à faire pour les axiomes d'une tribu sont faciles.
+On fixe donc $A\in \ccc$ et on pose $\mmm_1 = \ens{B\in\mmm(\ccc)|A\cap B\in\mmm(\ccc)}$. On a
+bien sur $\ccc\subset \mmm_1$. On vérifie ensuite que c'est une classe monotone (preuve omise pour
+gagner en concision, elle n'est pas difficile). La propriété de minimalité de $\mmm(\ccc)$ montre
+alors que $\mmm_1$ contient $\mmm(\ccc)$. On a donc~:\par
+$$\forall A\in\ccc, B\in\mmm(\ccc); A\cap B\in\mmm(\ccc)$$\par
+On fixe alors $B\in \mmm(\ccc)$ et on pose $\mmm_2 = \ens{A\in\mmm(\ccc)|A\cap B\in\mmm(\ccc)}$.
+On vient de montrer que $\ccc\subset\mmm_2$. Ensuite on vérifie que $\mmm_2$ est une classe 
+monotone, ce qui conclut la preuve.\hfill\fbox{{}}\par
+\proposition Soient $\bbb_1, \ldots, \bbb_n$ des sous-tribus de $\bbb$, tribu
+sur laquelle on définit une mesure de probabilité $P$. On se donne pour tout $i$ une classe 
+$\ccc_i\subset\bbb_i$, stable par intersections finies, contenant $\Omega$ (l'espace probabilisé)
+et telle que $\sigma(\ccc_i) = \bbb_i$. De plus on suppose que 
+$P(C_1\cap\ldots\cap C_n) = P(C_1)\ldots P(C_n)$ pour tous $C_i\in\bbb_i$. Alors les tribus 
+$\bbb_i$ sont indépendantes.
+\dem Par définition de l'indépendance, montrons que~: 
+$\forall B_i\in\bbb_i,\quad P(B_1\cap\ldots\cap B_n) = P(B_1)\ldots P(B_n)$. 
+On fixe $C_2,\ldots,C_n$ et on pose 
+$\mmm_1 = \ens{B_1\in\bbb_1|P(B_1\cap C_2\cap\ldots\cap C_n) = P(B_1)P(C_2)\ldots P(C_n)}$.
+On vérifie que $\ccc_1\subset \mmm_1$ et que $\mmm_1$ est une classe monotone. Le lemme de classe
+monotone assure alors que $\mmm(\ccc_1) = \sigma(\ccc_1) = \bbb_1$. Et donc on a montré
+que dans la propriété de l'énoncé on peut prendre $C_1$ dans $\bbb_1$ et pas seulement dans 
+$\ccc_1$. On reproduit alors le raisonnement en fixant $B_1\in\bbb_1, C_i\in\ccc_i$ et
+une récurrence montre le résultat voulu.\findem
+\proposition On prend $\bbb_1,\ldots,\bbb_n$ des tribus indépendantes et on les regroupe en deux paquets
+$\ddd_1 = \sigma(\bbb_1, \ldots\bbb_p)$, $\ddd_2 = \sigma(\bbb_{p+1},\ldots \bbb_n)$.
+Alors $\ddd_1$ et $\ddd_2$ sont indépendantes.
+\dem On prend $\ccc_1 = \ens{B_1\cap\ldots\cap B_p}$ et $\ccc_2 = \ens{B_{p+1}\cap\ldots\cap B_n}$.
+On aplique ensuite la proposition précédente.\findem
+\proposition Soit $(\bbb_n)_{n\in\nn}$ une famille infinie de tribus indépendantes. Alors pour tout
+$p$, $\ddd_1 = \sigma(\bbb_1, \ldots, \bbb_p)$ et $\ddd_2 = \sigma(\bbb_{p+1},\ldots)$ sont 
+indépendantes.
+\dem On prend $\ccc_1 = \bbb_1$ et $\ccc_2 = \bigcup\limits_{k=p+1}^{+\infty}\sigma(
+                                                     \bbb_{p+1},\ldots,\bbb_k)\subset\ddd_2$.
+Et on applique le proposition 1.2 pour montrer que $\ccc_2$ est stable par intersections finies.
+Ensuite, la proposition 1.1 donne le résultat.\findem
+\definition{} Si $A_n$ est une suite d'évènements, on note 
+$\limsup A_n = \bigcap\limits_{n=0}^{+\infty}\bigcup\limits_{k=n}^{+\infty}A_k$.
+\theoreme{Lemme de Borel-Cantelli}
+Soit $A_n$ une suite d'évènements.
+\begin{itemize}
+\item[(i)]{} Supposons $\serie{n=0}{+\infty}{P(A_n)}<+\infty$. Alors $P(\limsup A_n) = 0$ ou de
+manière équivalente, presque tout $\omega$ n'appartient qu'à un nombre fini de $A_i$.
+\item[(ii)]{} Si $\serie{n=0}{+\infty}{P(A_n)}=+\infty$ et que les $A_n$ sont indépendants, 
+$P(\limsup A_n) = 1$ ou de manière équivalente, presque tout $\omega$ appartient à un nombre infini
+de $A_i$.
+\end{itemize}
+\dem \begin{itemize}
+\item[(i)]{} On a $\esp{\sum_n \un_{A_n}} = \sum_n P(A_n) <+\infty$. Donc $\sum_n \un_{A_n}<\infty$
+$P$-p.s.
+\item[(ii)]{} Remarquons déjà que l'hypothèse d'indépendance est indispensable puisque par exemple
+en prenant $A_n = A$ pour tout $n$, avec $0<P(A)<1$. Ensuite
+on fixe $n_0$ et $n\geq n_0$. Alors l'indépendance des $A_k$ (et donc des $A_k^c$) donne 
+$P(\bigcap_{n_0}^n A_k^c) = \Pi_{k=n_0}^n P(A_k^c) = \Pi_{k=n_0}^{n}(1-P(A_k))$. Un résultat 
+classique d'analyse montre alors que puisque la série des $P(A_k)$ diverge, ce produit converge 
+vers $0$ quand $n$ tend vers l'infini. On a donc $P(\bigcap\limits_{k=n_0}^{\infty}A_k^c) = 0$.
+On obtient alors $P(\bigcup\limits_{n_0 = 0}^{\infty}\bigcap\limits_{k=n_0}^{\infty}A_k^c) = 0$
+puis, en passant au complémentaire, $P(\limsup A_n) = 1$.
+\end{itemize}\par\findem
+\theoreme{Loi du tout ou rien.} Soit $X_n$ une suite de v.a. indépendantes, à valeurs dans des 
+espaces mesurables quelconques. On définit $\bbb_n = \sigma(X_k, k\geq n)$ et $\bbb_{\infty} = 
+\bigcap\limits_{n=1}^{+\infty} \bbb_n$. Cette dernière tribu est grossière, i.e. $\forall B\in\bbb_{\infty}$, $P(B)\in\ens{0;1}$.
+\dem On pose $\ddd_n = \sigma(X_k; k\leq n)$. D'après la proposition 1.3, $\ddd_n$ est indépendante
+de $\bbb_{n+1}$ et donc de $\bbb_{\infty}$. Alors on a montré que pour tout $A$ de 
+$\ccc = \bigcup\limits_{n=1}^{+\infty}\ddd_n$ et tout $B$ de $\bbb_{\infty}$, $P(A\cap B)=P(A)P(B)$.
+Mais la classe $\ccc$ est stable par intersections finies et la proposition 1.1 montre que 
+$\bbb_{\infty}$ est indépendante de $\sigma{(\ccc)}$. $\bbb_{\infty}$ est donc en particulier 
+indépendante d'elle même et donc si $B \in \bbb_{\infty}$, $P(B) = P(B\cap B) = P(B)^2$, ce qui
+n'est possible que si $P(B)\in\ens{0; 1}$.\findem
+\spartie{Application aux marches aléatoires.}
+\theoreme{Comportement de la marche aléatoire simple.} Soit $X_n$ une suite de v.a. indépendantes, 
+de même loi $\mu$ telle que $P(X_n=1) = 1/2 = P(X_n= -1)$. Pour $n\geq 1$, on pose~:\par
+$$S_n = X_1 + \ldots X_n$$\par
+C'est la marche aléatoire simple sur $\zz$, issue de $0$. Alors~:\par
+$$\mathrm{p.s.}\quad\sup_{n\geq 1}S_n=+\infty\quad\mathrm{et}\quad\inf_{n\geq 1} S_n=-\infty$$\par
+Et en particulier, $S_n$ s'annule presque sûrement une infinité de fois.
+\dem Commençons par montrer que pour tout $p\geq 1$, $P(A)=0$ si 
+$A = \ens{-p\leq\inf S_n\leq\sup S_n\leq p}$.
+On fixe alors $k> 2p$ et on remarque que $\bigcup_{j=0}^{\infty}\ens{X_{jk+1}=\ldots=X_{jk+k}=1}
+\subset A^c$. En effet si l'on est dans l'un des ensembles de gauche, alors 
+$S_{jk+k} = 2p + S_{jk}$. De trois choses l'une, si $S_{jk} <-p$, on a bien $\inf S_n <-p$.
+Si $S_{jk} > p$, on a bien $\sup S_n>p$. Enfin, si $-p\leq S_{jk}\leq p$, $S_{jk+k}> p$.\par
+Ensuite, on montre que l'ensemble $\bigcup_{j=0}^{\infty}\ens{X_{jk+1}=\ldots=X_{jk+k}=1}$
+a une probabilité $1$. On pose en effet $A_j = \ens{X_{jk+1}=\ldots=X_{jk+k}=1}$. Les évènements
+$A_j$ sont indépendants grâce à la proposition 1.3 et leur probabilité vaut $\frac{1}{2^k}$.
+On a donc $\sum_j P(A_j) = +\infty$ et le lemme de Borel-Cantelli montre que presque tout $\omega$
+appartient à une infinité de $A_j$, donc à $A$. On a donc~:\par
+Pour tout $p\geq 0$, $P(\ens{-p\leq\inf S_n\cap\sup S_n\leq p}) = 0$.
+En faisant tendre $p$ vers l'infini, $P(\ens{-\infty<\inf S_n\cap\sup S_n<+\infty}) = 0$.
+Puis, en passant au complémentaire, $P(\ens{-\infty=\inf S_n\cup\sup S_n=+\infty}) = 1$.
+D'o\`u, $P(\ens{-\infty=\inf S_n})+P(\ens{\sup S_n=+\infty}) \geq 1$.\par
+Comme on a bien entendu que ces deux probabilités sont égales (par symétrie), elles sont
+toutes deux strictement positives. Or l'évènement $\ens{\sup S_n = +\infty}$ est dans la tribu
+asymptotique $\bbb_{\infty}$ puisque pour tout $k\geq 1$, $\ens{\sup S_n = +\infty} = 
+\ens{\sup_{n\geq k}(X_k +\ldots + X_n) = +\infty}\in \bbb_k$ (ce qui traduit le fait que les 
+premiers termes, en nombre fini, ne jouent pas de rôle). La loi du tout ou rien montre alors que 
+$P(\ens{\sup S_n = \infty}) = 1$.\findem
+On a donc montré que la marche aléatoire simple sur $\zz$ n'est pas bornée. En prenant une autre
+loi, telle que $P(X_n=-1) = 1/4 = P(X_n = 1)$ et $P(X_n=0) = 1/2$, on aurait obtenu le même 
+résultat. On peut ensuite étendre ce résultat en dimension supérieure. Ainsi, prenons la marche 
+aléatoire simple sur ${\zz}^2$, de loi $P(X_n = \pm e_i)=1/4$, o\`u $e_i$ sont les deux vecteurs de 
+la base canonique de ${\zz}^2$. En la projetant sur la droite $y=0$, on obtient une marche aléatoire
+uni-dimensionnelle, de loi donnée ci-dessus, dont on sait qu'elle diverge presque surement. On peut 
+donc énoncer le même théorème en dimension $2$~:\par
+\theoreme{} Soit $X_n$ une suite de v.a. indépendantes, de même loi donnée par $P(X_n=(0,\pm1))=1/4$
+et $P(X_n = (\pm 1, 0)) = 1/4$. Posons $S_n = X_1 +\ldots+X_n$ la marche aléatoire simple sur 
+${\zz}^2$ issue de $0$. Alors~:\par
+$$p.s.\quad\sup (S_n)_x=+\infty=\sup(S_n)_y\quad\mathrm{et}\quad\inf(S_n)_x=+\infty=\inf (S_n)_y$$
+\par
+O\`u $(S_n)_x$ (resp. $(S_n)_y$) représente la coordonnée selon $x$ (resp. selon $y$) de $S_n$.\par
+\spartie{La convergence en loi de la marche aléatoire simple.}
+Comme nous le verrons dans la troisième partie le mouvement Brownien est 
+une ``limite'' de marches aléatoires. Cette convergence se fait au sens de la convergence en loi.
+\definition{Convergence en loi.} Une suite $(X_n)$ de v.a. à valeurs dans ${\rr}^d$ converge en loi vers
+$X$ lorsque pour toute $\phim$ de $\ccc_b({\rr}^d)$, $\esp{\phim(X_n)}\tendn\esp{\phim(X)}$.\par
+Remarquons que dans cette défition, la limite n'est pas définie de manière unique et que les
+v.a. peuvent être définies sur des espaces de probabilité différents.\par
+\theoreme{théorème de la limite centrale.} Soit $X_n$ une suite de v.a. indépendantes, de même loi, de carré intégrables.
+On pose $\sigma^2 = \var(X_1)$. Alors on sait que~:\par
+$$\dfrac{1}{\sqrt{n}}(X_1 + \ldots+X_n - nE(X_1))\tendloi \nnn(0,\sigma^2)$$\par
+o\`u $\nnn(0,\sigma^2)$ désigne la loi gaussienne centrée de variance $\sigma^2$, de densité
+$p(x) = \dfrac{1}{\sqrt{2\pi}}e^{-x^2/(2\sigma^2)}$.\par
+Nous admettrons également ce théorème dans sa généralité, car sa démonstration nécessite trop de théorie supplémentaire. 
+Toutefois, nous allons le démontrer dans le cas de la marche 
+aléatoire simple sur $\zz$ et ce avec des outils élémentaires.\par
+Prenons une marche aléatoire $S_n = X_1 + \ldots + X_n$ o\`u les $X_k$ sont indépendantes et vérifient $P(X_i=1)=P(X_i=0) = 1/2$ et
+montrons la propriété~:\par
+$$\limn\dfrac{1}{2^n}\serie{\frac{n}{2}\leq k\leq\frac{n}{2}+\sqrt{n}}{}{C^k_n}=\sqrt{\dfrac{2}{\pi}}\integrale{0}{1}{e^{-2x^2}\dd{x}}$$
+\par
+Cela revient en fait à prendre pour $\phi$ (dans la convergence en loi) l'indicatrice du segment $\segment{0}{1}$.\par
+Pour ce faire, on utilise la formule de Stirling $n!\sim \bigl(\frac{n}{e}\bigr)^n\sqrt{2\pi n}$~:\par
+On écrit donc $C^k_n \sim \frac{1}{\sqrt{2\pi}}\sqrt{\frac{n}{k(n-k)}}\bigl(\frac{n}{k}\bigr)^n\bigl(\frac{k}{n-k}\bigr)^{n-k}$.
+En effet, si $n$ tend vers l'infini, $k$ ``le suit'' s'il reste dans l'intervalle entier considéré. Examinons chacun des trois facteurs.
+\begin{itemize}
+\item[$\bullet$]{$\sqrt{\dfrac{n}{k(n-k)}}$}. On écrit $k = n/2+h$. Alors ce terme vaut $\sqrt{\dfrac{n}{\frac{n^2}{4}-h^2}}$.
+Un D.L donne alors $\frac{2}{\sqrt{n}}\bigl(1+2\frac{h^2}{n^2}\bigr)\sim \frac{2}{\sqrt{n}}$. Soit~:\par
+$$\sqrt{\dfrac{n}{k(n-k)}}\sim \dfrac{2}{\sqrt{n}}$$\par
+\item[$\bullet$]{$\bigl(\frac{n}{k}\bigr)^n$} Avec la même astuce de notation, prenons le log de cette quantité.
+$n\ln \bigl(\frac{n}{k}\bigr) = n\ln\bigl(\dfrac{n}{n/2 +h}\bigr) = n\ln 2 -n\ln(1+2h/n)$. On effectue alors un D.L à l'ordre 2 du log
+pour obtenir $n\ln 2 -2h +2\frac{h^2}{n^2} + \petito{1}$. On a alors le droit de prendre l'exponentielle pour obtenir~:\par
+$$\bigl(\frac{n}{k}\bigr)^n\sim 2^ne^{-2h}e^{2\frac{h^2}{n}}$$
+\item[$\bullet$]{$\bigl(\frac{k}{n-k}\bigr)^{n-k}$} On fait de même, mais cette fois le calcul est plus long. Le log de cette 
+quantité vaut $(n/2-h)\ln\bigl(\frac{n/2+h}{n/2 -h}\bigr)$, soit $(n/2 -h)\ln\left\lbrack(1+\frac{2h}{n}\bigr)\bigl(1+\frac{2h}{n}+\frac{4h^2}{n^2}+\petito{1/n}\bigr)\right\rbrack$. On simplifie alors cette expression sous la forme~:
+$(n/2-h)\ln\lbrack 1 + \frac{4h}{n} + \frac{8h^2}{n^2} +\petito{1/n}\rbrack = (n/2-h)(4h/n+\petito{1/n}$, en utilisant le D.L
+du logarithme en $1$. On obtient finalement $2h -4h^2/n^2 + \petito{1}$. En passant à l'exponentielle on a~:\par
+$$\bigl(\frac{k}{n-k}\bigr)^{n-k}\sim e^{2h}e^{-4\frac{h^2}{n}}$$\par
+\end{itemize}
+En regroupant ces résultats, on a donc pour $k$ dans l'intervalle considéré~:\par
+$$2^{-n}C^k_n= \sqrt{\dfrac{2}{\pi}}\frac{1}{\sqrt{n}} e^{-2\bigl(\frac{h}{\sqrt{n}}\bigr)^2}+\petito{1/\sqrt{n}}$$\par
+Ce qui permet de conclure, en reconnaissant une somme de riemann.
+On a donc montré le théorème central limite dans le cas particulier d'une marche aléatoire simple
+sur $\zz$. Il est intéressant de le vérifier informatiquement, et de constater la convergence
+en loi. (c-f annexe pour le programme réalisant cela).
+\centerline{\includegraphics*[width=20cm,height=2cm]{images/gaussienne.ps}}\par
+et l'allure gaussienne de la loi apparaît clairement.

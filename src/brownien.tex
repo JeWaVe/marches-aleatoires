@@ -1,0 +1,113 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{color,amsmath,amssymb}
+\usepackage{pst-all}
+\usepackage{graphicx}
+\usepackage{ulem}
+\usepackage{maths}
+\usepackage{hyperref}
+\sloppy
+
+% déclarations préliminaires
+%
+\begin{document}
+\pagestyle{plain}
+
+%
+% Document à proprement parler
+%
+% Bibliographie
+%
+\nocite{*}
+\bibliographystyle{plain}                   
+%
+%
+\ 
+\vspace{120pt}\par
+\centerline{%\renewcommand{arraystretch}{2}
+\begin{tabular}{c}
+   \huge{Processus aléatoires}\\
+\vspace{2pt}\\
+   \huge{et}\\
+\vspace{2pt}\\
+   \huge{Problème de Dirichlet.}
+\end{tabular}}
+%
+%
+
+
+\newpage \centerline{\Large{\textbf{Introduction~:}}}\par\vspace{4ex}
+Dans un condensateur, le potentiel électrostatique vérifie $\Delta V = 0$ ainsi que des 
+conditions aux limites sur les armatures. Le problème de Dirichlet consiste à montrer
+l'existence et l'unicité du potentiel dans de telles conditions. On se donne donc un
+ouvert connexe borné $D$ de ${\rr}^d$, ainsi qu'une fonction continue $V_0$ sur la 
+frontière $\partial D$ de $D$. $D$ représente l'espace vide inter-armatures, $\partial D$ 
+les armatures et $V_0$ le ``potentiel aux bornes''. Il s'agit alors de montrer l'existence
+et l'unicité de $V$ tel que $\Delta V = 0$ sur $D$ et $V=V_0$ sur $\partial D$.
+Cette généralisation mathématique permettra d'étendre les résultats obtenus à la diffusion
+thermique ou n'importe quel problème physique faisant intervenir des fonctions 
+harmoniques.\par
+L'unicité est facile à prouver en utilisant le principe du maximum. La partie
+difficile du problème de Dirichlet est donc l'existence. On peut l'obtenir en minimisant
+la fonctionnelle $V\to \int_D \norme{\grad{V}}^2$ mais on a alors besoin d'espaces de
+Sobolev, ce qui est inaccessible à notre niveau. Nous avons choisi une approche
+probabiliste, ce qui permet une construction explicite de la solution.\par
+Afin de simplifier l'étude, nous nous contentons dans un premier temps du problème 
+discret. Ainsi, dans une première partie, après avoir introduit des notions et théorèmes
+de probabilité, nous étudions les marches aléatoires à temps discret. Nous verrons en 
+effet que celles-ci jouent un rôle crucial dans la résolution du problème de Dirichlet
+discret --- c'est-à-dire sur le réseau ${\zz}^d$. De plus nous retrouvons avec des outils 
+élémentaires (formule de Stirling), le théorème central limite dans le cas des marches aléatoires.
+\par
+La deuxième partie est consacrée à sa résolution explicite. Dans cet esprit, nous introduisons les chaînes de Markov. 
+Cette partie est la plus théorique. Nous définissons la chaîne de Markov sur un espace dénombrable, dont
+nous admettons l'existence. Ensuite, nous démontrons la propriété de Markov, ce qui permet
+de trouver une solution au problème de Dirichlet.\par
+La troisième partie est consacrée à la résolution informatique du cas discret et du cas continu. 
+Nous introduisons alors le mouvement brownien qui permet de trouver une 
+solution dans le cas continu de même que les marches aléatoires le permettaient dans le cas 
+discret. De même, nous avons réalisé des programmes en Caml qui permettent de visualiser des 
+solutions approchées. Enfin, nous étudions la complexité moyenne de notre algorithme et nous la 
+comparons à d'autres méthodes de résolution numérique.\par
+Toutefois, étant donné la difficulté des outils mis en jeu relativement à notre niveau,
+les résultats les plus difficiles de probabilité ou de théorie de l'intégration, comme
+le théorème d'arrêt pour les martingales, l'existence de Brownien ou de la chaîne de 
+Markov canonique sont admis. Les résultats plus abordables sont par contre démontrés.
+
+\include{marchesalea/marchesalea} 
+\include{discret/discret}
+\include{continu/continu}
+%\include{annexes/annexe1}
+
+\begin{thebibliography}{a}
+\bibitem{integration}
+Walter \textsc{Rudin}.\emph{Analyse réelle et complexe}.
+Dunod 1998
+
+\bibitem{internet}
+Internautes.\ \emph{http://les-mathématiques.net/forum}
+
+\bibitem{proba}
+J-F. \textsc{Le Gall}.\ \emph{Intégration, probabilités et processus aléatoires}.
+
+\bibitem{Contact}
+S. \textsc{Cohen}.
+Chercheur au CICT, Université \textsc{Paul Sabatier}.
+
+
+\end{thebibliography}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,163 @@
+\partie{Problème classique et traitement informatique.} 
+\spartie{Mouvement Brownien.}
+Tout d'abord, introduisons le mouvement brownien, qui sera le pendant
+des marches aléatoires discrètes dans le cas continu.
+\definition{} On appelle mouvement Brownien (en dimension 1, issu de 0), une famille
+$(B_t)_{t\in \rr_+}$ de v.a. à valeurs réelles, vérifiant les deux propriétés suivantes~:\par
+\begin{itemize}
+\item[(1)]{} $B_0=0$ p.s. et pour tout $p\geq 0$ et tous réels $0=t_0<t_1<\ldots < t_p$, les 
+v.a. $B_{t_1}, B_{t_2}-B_{t_1},\ldots, B_{t_p}-B_{t_{p-1}}$ sont indépendantes et pour tout 
+$j$, $B_{t_j}-B_{t_{j-1}}$ a une loi gaussienne $\nnn(0,t_j-t_{j-1})$.
+\item[(2)]{} Pour tout $\omega$, $t\to B_t(\omega)$ est continue.
+\end{itemize}\par
+\rmq Un mouvement Brownien en dimension $d$ est un vecteur $(B_1,\ldots,B_d)$ de mouvements
+Browniens unidimensionnels.
+\rmq Un mouvement Brownien issu de $x$ est $B+x$, o\`u $B$ est de la forme ci-dessus.
+En utilisant la propriété que nous avons démontrée sur la convergence en loi de marches aléatoires, il apparaît qu'intuitivement
+(et c'est le cas rigoureusement!), le mouvement Brownien est une ``limite'' de marches aléatoires convenablement changées d'échelle.
+Cela explique la ressemblance des trajectoires obtenues pour une marche aléatoire et un brownien simulé~:\par
+\centerline{\begin{tabular}{cc}
+\includegraphics*[width=3cm,height=3cm]{images/marche_alea.ps} & 
+\includegraphics*[width=3.5cm,height=3cm]{images/brownien_simul.ps}\\
+Marche aléatoire & Mouvement Brownien simulé
+\end{tabular}}\par
+Notons que Caml ne génère pas de variable aléatoire gaussienne. Pour les obtenir, nous avons dû utiliser que si $U$ et $V$ sont
+des variables aléatoires de loi uniforme sur $\segment{0}{1}$, alors $\sqrt{-2\ln(U)}\cos(2\pi V)$ a une loi gaussienne.\par
+Pour ce qui est de la résolution du problème de Dirichlet classique avec des mouvements browniens, nous n'avons malheureusement pas
+eu le temps (ni la capacité?) d'assimiler à temps les notions nécessaires. Nous admettons alors que la formule proposée
+dans le cas discret continue de fonctionner, à condition de remplacer
+$X_n$ par $B_t$ et $\mathbb{P}_x$ par une mesure de probabilité sur
+${\ccc}({\rr}_+,{\rr}^d)$ qui est la mesure de Wiener.
+Pour cela, il faut cependant que l'ouvert vérifie la condition de ``cône extérieur''. Cela signifie qu'en tout point de la frontière 
+de l'ouvert, on peut placer un cône ne rencontrant pas l'ouvert.\par
+\centerline{\includegraphics*[width=9cm,height=4.5cm]{images/Ouverts.eps}}
+\spartie{Résolution informatique.}
+\sspartie{Présentation de l'algorithme.}
+Pour calculer l'espérance, qui donne la valeur de la solution au point
+considéré, nous lançons $n$ marches aléatoires du point $x$, nous notons la valeur de la condition aux limites au point de sortie, puis nous faisons la moyenne de ces $n$ valeurs obtenues. C'est ce que réalise ce programme dans le cas discret~:\par
+{\begin{verbatim}
+#open "graphx";;
+load_object "graphx";;
+\end{verbatim}}\par
+\uline{Calcul d'une valeur approchée de $\mathbb{E}_{(x,y)}(f(B_T))$~:}\par
+{\begin{verbatim}
+let dirichlet ouvert f x y n =
+  let m = ref 0. in
+    for i = 1 to n do  (* lancer de n marches aléatoires *)
+      let a = ref x and b = ref y in
+	while ouvert !a !b do
+	  let u = random__int 4 in
+	    if u = 0 then a := !a + 1
+	    else if u = 1 then a := !a - 1
+	    else if u = 2 then b := !b + 1
+	    else b := !b - 1
+	done;
+	m := !m +. (f !a !b ); (* récupération de la valeur 
+                                  de la condition aux limites
+                                  au point de sortie *)
+    done;
+    !m /. (float_of_int n);;   (* renvoi du résultat *)
+\end{verbatim}}\par
+Ainsi, ``ouvert'' est une fonction de type \begin{verbatim}int-> int-> bool\end{verbatim} qui décrit
+l'ouvert de définition, ``f'' est la condition aux limites et la fonction dirichlet est de type \begin{verbatim}(int-> int-> bool)-> (int->int->float)->int->int->int->float\end{verbatim}.\par
+Voici une représentation de ce que fait la fonction dirichlet n fois~:\par
+\centerline{\includegraphics*[width=5cm,height=5cm]{images/marche_sortie.ps}}
+Afin d'obtenir une représentation graphique du résultat obtenu, nous stockons ces résultats dans une matrice par la fonction suivante~:\par
+\begin{verbatim}
+let solution ouvert f n =
+  let t1 = borne_ouvert ouvert in (* fonction auxiliaire calculant
+                               la taille de la matrice *)
+    let m = mat_float (t1+1) in   (* fabrication de la matrice *)
+    for x = 0 to t1 do
+      for y = 0 to t1 do
+	if ouvert x y then 
+	  m.(x).(y) <- dirichlet ouvert f x y n (* remplissage *)
+	else if frontiere ouvert x y then (* coloration en noir de
+                                             la frontière *)
+	  m.(x).(y) <- 0.     
+	else m.(x).(y) <- 100. (* coloration en blanc du reste *)
+      done;
+    done;
+    m;;
+\end{verbatim}\par
+o\`u~:\par
+\begin{verbatim}
+let frontiere ouvert x y =
+  if not (ouvert x y) then
+    if (ouvert (x+1) y)||(ouvert (x-1) y)||(ouvert x (y+1))||(ouvert x (y-1)) then true
+    else false
+  else false;;
+\end{verbatim}\par
+décrit la frontière de l'ouvert en question, en vue de la coloriser en noir, ce qui améliore la lisibilité.\par
+On peut alors représenter la solution, en prenant une convention de coloration~:\par
+\begin{verbatim}
+let couleur i =
+  match i with
+    |0 -> black |1 -> red |2 -> yellow |3 -> green
+    |4 -> blue |5 -> cyan |6 -> white;;
+\end{verbatim}
+Ces couleurs sont choisies pour représenter au mieux le cas o\`u le potentiel est la température. Le chaud étant alors représenté en blanc et le froid en noir.
+On est alors en mesure d'écrire le programme suivant~:\par
+\begin{verbatim}
+let graphe_solution ouvert f n =
+  let graphe_mat m =
+  clear_graph();
+  let t1 = vect_length m.(0) in
+  let p = max m in (* détermination du max de la matrice *)
+    for i = 0 to (t1 - 1) do
+      for j = 0 to (t1 - 1) do
+	let c = int_of_float (7. *. (m.(i).(j) /. (p +. 1.))) in
+	  set_color (couleur c); (* affectation d'une couleur *)
+	  fill_rect {x=i; y=j} 1 1; (* représentation *)
+      done;
+    done;
+  in
+  open_graph " 640x640";
+  let m = solution  ouvert f n in
+    graphe_mat m;;
+\end{verbatim}\par
+Donnons des exemples de résolution dans divers cas~:\par\vspace{2ex}
+\begin{tabular}{ccc}
+\includegraphics*[width=3cm,height=3cm]{images/drapeau.ps} & 
+\includegraphics*[width=3.5cm,height=3cm]{images/triangle.ps} & 
+\includegraphics*[width=3cm,height=3cm]{images/rond.ps}\\
+\begin{minipage}{5cm}
+Le potentiel au bord ne dépend que de $x$. On trouve bien un potentiel intérieur du même genre.
+\end{minipage} & 
+\begin{minipage}{5cm}
+On se place sur un triangle dont un côté seulement est chauffé.
+\end{minipage} &
+\begin{minipage}{5cm}
+On se place sur un disque dont on a chauffé un secteur angulaire.
+\end{minipage}
+\end{tabular}\par
+Dans le cas continu, les programmes sont identiques à condition de remplacer la marche aléatoire par un brownien (il faut tout de même faire
+quelques adaptations!).
+\spartie{Complexité.}
+Afin d'évaluer la complexité moyenne de cet algorithme, il convient de simplifier les choses. On introduit donc
+$T_n = \inf\lbrace k : \va{S_k} = n\rbrace$ qui représente le temps de sortie de l'intervalle 
+$\segment{-n}{n}$ d'une marche aléatoire de loi de variance $\sigma^2$. Calculons son 
+espérance en montrant que $S_n^2-\sigma^2 n$ est une martingale pour la filtration naturelle du processus $X_n$ 
+(i-e $\fff_n = \sigma(X_1, \ldots X_n)$). Ces variables sont clairement intégrables, et 
+$\espc{S_{n+1}^2-(n+1)\sigma^2}{\fff_n} = \espc{X_{n+1}^2 +2X_{n+1}S_n+S_n^2 - (n+1)\sigma^2}{\fff_n}$. 
+On utilise alors les propriétés de l'espérance conditionnelle et le fait que $S_{n+1}=S_n+X_{n+1}$~:\par
+\begin{itemize}
+\item{}$\espc{X_{n+1}^2}{\fff_n} = \esp{X_{n+1}^2} = \sigma^2$ par indépendance de $X_{n+1}$ par rapport à 
+$\fff_n$.
+\item{}$\espc{2X_{n+1}S_n}{\fff_n} = 2S_n\esp{X_{n+1}} = 0$ car $S_n$ est $\fff_n$ mesurable.
+\item{}$\espc{S_n^2}{\fff_n} = S_n^2$ car $S_n$ est $\fff_n$ mesurable.
+\end{itemize}
+On obtient bien le résultat annnoncé. En appliquant le théorème d'arrêt (admis\ldots) à cette martingale, on montre que
+le processus $S_{k\land T_n}^2 - \frac{1}{2} k\land T_n$ est une martingale. En prenant l'espérance, il vient~:
+$\esp{S_{k\land T_n}^2}=\frac{1}{2}\esp{k\land T_n}$. Et une application du théorème de convergence dominée de 
+Lebesgue à chacun des deux membres montre que~:\par
+$$\esp{T_n} = \left(\dfrac{n}{\sigma}\right)^2$$\par
+Cela montre que pour chaque point dont on calcule le potentiel approché, on réalise de l'ordre de $T^2$ 
+opérations, o`u $T$ désigne la taille de l'ouvert. Comme on fait cela pour $T^2$ points à peu près, le programme
+a une complexité en $n \mathcal{O}(T^4)$ o~`u $n$ désigne le nombre de calcul pour chaque point. C'est une 
+complexité très mauvaise. Cependant, elle a l'avantage de ne pas dépendre de la géométrie de la frontière.
+
+
+
+
+

@@ -1,0 +1,133 @@
+\partie{Probabilit�s}
+\spartie{Introduction.}
+Nous commen�ons par d�finir proprement les notions de probabilit�, de variable al�atoire... On fixe donc � partir de maintenant 
+$(\Omega,\aaa)$ un espace mesurable et $P$ une mesure de probabilit� sur $\aaa$. ($P(\Omega) = 1$). $\Omega$ repr�sente l'espace de 
+toutes les d�terminations du hasard, l'ensemble des �ventualit�s. $\aaa$ repr�sente l'ensemble des �v�nements dont on veut �valuer la 
+probabilit�. $P(A)$ repr�sente la probabilit� d'occurrence de l'�v�nement $A\in \aaa$. 
+\definition{Variable al�atoire.} Soit $(E,\eee)$ un espace mesurable. Si $X : \Omega\to E$ est mesurable, elle est qualifi�e de 
+``variable al�atoire'' (v.a.) � valeurs dans $E$. 
+\definition{Loi d'une v.a.} Si $X : \Omega\to E$ est une v.a., la loi de $X$ est la mesure de probabilit� sur $E$ d�finie par~:\par
+$$P_X(A) = P(X\in A) = P(\lbrace\omega\in \Omega : X(\omega)\in A\rbrace)$$
+\definition{Densit�.} Une v.a. � valeurs dans ${\rr}^d$ muni de sa tribu bor�lienne est dite � densit� lorsque sa loi est absolument
+continue par rapport � la mesure de Lebesgue. Le th�or�me de Radon-Nykodim donne alors une fonction $p$ de $L^1({\rr}^d)$ � valeurs 
+dans $\rr$ telle que~:\par
+$$P_X(B) = \integrale{B}{}{p(x)\dd{x}}$$\par
+Donnons quelques exemples de lois classiques~:
+\begin{itemize}
+\item{Lois discr�tes (cas o\`u $E$ est d�nombrable ou fini).}
+\begin{enumerate}
+\item{Loi uniforme~:} Si $E$ est fini de cardinal $n$, une v.a. de loi uniforme v�rifie $P(X=x) = \dfrac{1}{n}$.
+\item{Loi de Bernoulli~:} C'est la loi d'une v.a. � valeurs dans $\lbrace 0,1\rbrace$ telle que $P(X=0) = p$.\par
+C'est la loi d'un lancer de pi�ce truqu�e (sauf si $p = 1/2$!).
+\item{Loi bin�miale~:} C'est la loi d'une v.a. � valeurs dans $\intset{1}{n}$ telle que $P(X=k) = C^k_np^k(1-p)^{n-k}$.
+\item{Loi de Poisson de param�tre $\lambda$~:} Si $\lambda > 0$ et $X$ une v.a. � valeurs dans $\nn$ telle que 
+$P(X=k) = \dfrac{\lambda^k}{k!}e^{-\lambda}$
+\end{enumerate}
+\item{Loi continues (cas o\`u $E = {\rr}^d$).}
+\begin{enumerate}
+\item{Loi uniforme~:} C'est une v.a. de densit� $p(x) = \dfrac{1}{b-a}1_{\segment{a}{b}}(x)$
+\item{Loi exponentielle de param�tre $\lambda>0$~:} $p(x) = \lambda e^{-\lambda x}1_{{\rr}_+}(x)$
+\item{Loi gaussienne $\nnn(m,\sigma^2)$~:} $p(x) = \dfrac{1}{\sigma\sqrt{2\pi}}\mathrm{exp}\Bigl(-\dfrac{(x-m)^2}{2\sigma^2}\Bigr)$
+C'est la loi continue la plus importante en th�orie des probabilit�s.
+\end{enumerate}
+\end{itemize}
+\rmq La densit� est d�termin�e de mani�re unique dans $L^{1}$ (soit � un ensemble de mesure nulle pr�s) � partir de la loi de $X$, 
+et r�ciproquement, d'o\`u la seule pr�cision de la densit� ci-dessus.
+\definition{Esp�rance} Si $X$ est une v.a. � valeurs r�elles, on note~:\par
+$$\esp{X} = \integrale{\Omega}{}{X\dd{P}}$$\par
+C'est ce qui correspond � la notion classique de valeur moyenne.
+\rmq Cette quantit� (r�elle) est bien d�finie lorque $X\geq 0$ ou que $X\in L^1$. On �tend alors la d�finition � une variable al�atoire
+dans ${\rr}^d$, $X = (X_1,\ldots,X_d)$ par $\esp{X} = (\esp{X_1},\ldots,\esp{X_d})$.
+\prop{} Soit $x$ une v.a. � valeurs dans $(E,\eee)$. Pour toute fonction mesurable $f : E\to \segment{0}{\infty}$ on a~:\par
+$$\esp{f(X)} = \integrale{E}{}{f(x)P_X(\mathrm{d}x)}$$\par
+\dem On commence par $f = 1_B$ puis on passe � la limite monotone par densit� des fonctions �tag�es dans l'ensemble des fonctions 
+mesurables positives.
+\rmq Si $X$ a une densit� $p$, alors $\esp{f(X)} = \int_E{f(x)p(x)\dd{x}}$
+\rmq La densit� est d�termin�e de mani�re unique dans $L^{1}$ et r�ciproquement, d'o\`u la seule pr�cision de la densit� ci-dessus.
+\rmq Cette propri�t� est utilis�e couramment pour calculer la loi de $X$. On calcule $\esp{f(X)}$ pour $f$ mesurable et on la met sous
+la forme $\int_{E}{f\dd{\nu}}$, ce qui permet de conclure � $P_X = \nu$.\par
+On d�finit la tribu engendr�e par une v.a. comme la plus petite tribu qui la rende mesurable~: 
+$\sigma(X)=\lbrace X^{-1}(B),B\rbrace$.\par
+On en vient � une propri�t� importante pour les calculs d'esp�rance conditionnelle~:\par
+\prop{} Soit $X$ une variable al�atoire � valeurs dans $(E,\eee)$ et soit $Y$ une v.a. r�elle. On a �quivalence entre~:
+\begin{itemize}
+\item{(i)} $Y$ est $\sigma(X)$-mesurable.
+\item{(ii)} Il existe une fonction mesurable telle que $Y = f(X)$.
+\end{itemize}\par
+\dem Une implication �tant �vidente, traitons, $(i)\implique (ii)$. Si on suppose $Y = 1_{A}$ pour commencer. $A\in \sigma(X)$ donc
+il existe $B\in \eee$ tel que $A = X^{-1}(B)$. Alors $Y = 1_B \circ X$. Par lin�arit�, on �tend le r�sultat � $Y$ �tag�e et enfin 
+on conclut par convergence domin�e.
+\definition{Variance, �cart-type.} Si $X\in L^2$, la variance de $X$ est~:\par
+$$\var (X) = \esp{(X-\esp{X})^2}$$\par
+et l'�cart-type de $X$~:\par
+$$\sigma_X = \sqrt{\var(X)}$$\par
+\definition{Fonction caract�ristique.} Si $X$ est une v.a. � valeurs dans ${\rr}^d$, la fonction caract�ristique de $X$ est la 
+fonction~:\par
+$$\Phi_X~:\fonction{{\rr}^d}{\cc}{\xi}{\esp{e^{i\xi\cdot X}} = \integrale{}{}{e^{i\xi\cdot x}P_X(\mathrm{d}{x})}}$$\par
+C'est donc la transform�e de Fourier de la loi de $X$. Cette fonction est continue et born�e. On peut montrer (mais cela n'est pas 
+facile et pas vraiment fondamental ici), que la fonction caract�ristique d'une variable al�atoire caract�rise la loi de cette variable. 
+Autrement dit, la transform�e de Fourier est injective sur l'espace des mesures de probabilit�.
+\spartie{Ind�pendance.}
+\definition{Ev�nements ind�pendants.} Deux �v�nements $A,B$ sont ind�pendants lorsque $P(A\cap B) = P(A)P(B)$.\par
+\definition{Probabilit� conditionnelle.} Si $P(B)>0$ on d�finit $P(A|B) = \dfrac{P(A\cap B)}{P(B)}$.\par
+On voit donc que $A$ et $B$ sont ind�pendants lorque la probabilit� conditionnelle $P(A|B)$ vaut $P(A)$ c'est-�-dire que le fait que
+$B$ soit r�alis� n'influence pas la probabilit� de $A$.\par
+Plus g�n�ralement, on dit que $n$ �v�nements sont ind�pendants si pour tout sous-ensemble de $\intset{1}{n}$ on a $P(A_{i_1}\cap\ldots
+\cap A_{i_p}) = P(A_{i_1})\cap\ldots \cap P(A_{i_p})$. Il ne suffit pas qu'ils soient ind�pendants deux � deux.
+\definition{Tribus ind�pendantes.} Si $\bbb_1,\ldots,\bbb_n$ sont $n$ sous-tribus de $\aaa$ (celle o\`u est d�finie $P$), elles sont 
+ind�pendantes ssi~:\par
+$$\forall A_i\in \bbb_i, P(A_1\cap\ldots\cap A_n) = P(A_1)\ldots P(A_n)$$\par
+Rappelons un r�sultat important, dont la d�monstration est admise, et qui interviendra dans la d�\-mon\-stra\-tion de la loi du tout ou 
+rien~:
+\theoreme{}
+Si $\bbb_1,\ldots,\bbb_n$ sont des tribus et $\ccc_i$ des parties telles que $\bbb_i = \sigma(\ccc_i)$, chacune stable par intersections
+finies, contenant $\Omega$ et telles que pour tout $C_i\in \ccc_i$ on ait $P(C_1\cap\ldots C_n) = P(C_1)\cap\ldots\cap P(C_n)$. Alors 
+les tribus $\bbb_i$ sont ind�pendantes.\par
+On en d�duit que si $n$ tribus sont ind�pendantes alors les tribus obtenues en regroupant celles-ci par paquets~: 
+$\sigma(\bbb_{i_1}, \ldots,\bbb_{i_p})$ sont encore ind�pendantes.\par
+Par extension une famille infinie de tribu est ind�pendante lorsque toutes ses sous-familles finies sont ind�pendantes (� comparer avec
+la libert� d'une famille infinie de vecteurs). Le principe ci-dessus montre alors que si $(\bbb_n)$ est une famille d�nombrable 
+ind�pendante, les tribus $\sigma(\bbb_1,\ldots,\bbb_n)$ et $\sigma(\bbb_{n+1},\ldots)$ sont �galement ind�pendantes.
+Et si $X_i$ sont $n$ v.a., elles sont ind�pendantes lorsque les tribus $\sigma(X_i)$ le sont. On a alors une C.N.S assez pratique
+pour dire si oui ou non $n$ v.a. sont ind�pendantes.
+\theoreme{} $X_1,\ldots,X_n$ sont ind�pendantes ssi $P_{(X_1,\ldots,X_n)} = P_{X_1}\otimes\dots\otimes P_{X_n}$. On a alors gr�ce au
+th�or�me de Fubini~: $\esp{\Pi_{i=1}^{n}f_i(X_i)}= \Pi_{i=1}^n \esp{f_i(X_i)}$ d�s que les $f_i$ sont mesurables positives.\par
+\rmq Ce th�or�me implique que si la loi de $(X_1,\ldots,X_n)$ a une densit� produit~: $p(x_1,\ldots,x_n) = \Pi_i q_i(x_i)$ avec les 
+$q_i$ des fonctions bor�liennes positives, alors chacune des $X_i$ admet une densit� de la forme $\alpha_i q_i(x_i)$ et les variables
+al�atoires $X_i$ sont ind�pendantes.
+\theoreme{Lemme de Borel-Cantelli.}
+Soit $A_n$ une suite d'�v�nements ind�pendants. Si $\sum_n P(A_n) = +\infty$ alors p.s. $\lbrace n : \omega\in A_n\rbrace$ est infini
+ou de mani�re �quivalente, $P(\bigcap_{n\geq 0}\bigcup_{k\geq n} A_k) = 1$.
+\dem On va montrer en montrant qu'en fait, pour tout $n_0$, $P(\cap_{n\geq n_0} A_k^{c}) = 0$. En effet, si $n\geq n_0$ on a 
+$P(\cap_{k = n_0}^nA_k^c) = \Pi_{n_0}^n P(A_k) = \Pi_{n_0}^{n}(1-P(A_k))$. Mais la s�rie $\sum P(A_k)$ diverge et un r�sultat
+simple d'analyse montre bien que ce produit a une limite nulle lorsque $n$ tend vers l'infini. Mais comme cela est vrai pour tout $n_0$ 
+et que ceux-ci sont en nombre d�nombrable, on a $P(\cup_{n_0\geq 0}\cap_{n\geq n}A_k) = 0$. Il suffit alors de passer au compl�mentaire
+pour conclure.
+\spartie{Convergence de variable al�atoires.}
+Pour d�finir le mouvement Brownien, on aura besoin de convergence de processus al�atoires, c'est-�-dire de suite de v.a. On conna�t
+d�j� la convergence dans $L^p$ et la convergence presque s�re. Toutefois, on aura besoin d'introduire d'autres modes de convergence
+pour pouvoir �noncer et d�montrer les th�or�mes fondamentaux que sont la loi forte des grands nombres et le th�or�me central limite.
+\definition{Convergence en probabilit�.}
+Soit $X_n$ une suite de v.a. d�finies sur $\Omega$. On dit que $X_n$ converge en probabilit� vers $X$ et on note~: 
+$X_n \tendproba X$ ssi\par
+$$\forall\eps>0, P(\va{X_n-X}>\eps)\tendn 0$$\par
+La convergence en probabilit� est plus faible � la fois que la convergence presque s�re et que la convergence dans $L^p$. Cependant, 
+la convergence en probabilit� entra�ne la convergence presque s�re pour une sous-suite.\par
+On va maintenant d�montrer un r�sultat tr�s important, la loi forte des grands nombres.\par
+\theoreme{Loi forte des grands nombres.}
+Si $X_n$ est une suite de variables al�atoires ind�pendantes de m�me loi, alors on a~:\par
+$$\frac{1}{n}(X_1 + \ldots + X_n) \tendps \esp{X_1}$$\par
+Pour d�montrer ce th�or�me, on a besoin d'un lemme important~:\par
+\theoreme{La loi du tout ou rien.}
+Soit $X_n$ une suite de v.a. ind�pendantes. On note $\mathcal{B}_n = \sigma(X_k, k\geq n)$ et $\mathcal{B}_{\infty} = \bigcap_n 
+\mathcal{B}_n$ Alors $\mathcal{B}_{\infty}$ est grossi�re~: $P(B)\in \lbrace 0, 1\rbrace$.
+\dem Posons $\mathcal{D}_n = \sigma(X_k, k\leq n)$ D'apr�s le principe du regroupement par paquets, $\mathcal{D}_n$ et 
+$\mathcal{B}_{n+1}$ sont ind�pendantes et donc $\mathcal{D}_n$ et $\mathcal{B}_{\infty}$ aussi. On a donc pour tout 
+$A\in \bigcup_n\mathcal{D}_n, B\in \mathcal{B}_{\infty}, P(A\cap B) = P(A)P(B)$. Mais la classe $\bigcup_n\mathcal{D}_n$ est stable par 
+intersections finies et engendre $\mathcal{B}_{\infty}$. Ainsi, $B_{\infty}$ est ind�pendante d'elle m�me, et est donc grossi�re.
+\definition{Convergence en loi.}
+Soit $X_n$ une suite de v.a. sur ${\rr}^d$. On dit que $X_n$ converge en loi vers $X$ et on note~: $X_n\tendloi X$ ssi~:\par
+$$\forall \phim\in\contborn{{\rr}^d}, \esp{\phim(X_n)}\tend \esp{\phim(X)}$$\par
+
+
+
